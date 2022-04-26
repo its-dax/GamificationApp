@@ -17,6 +17,7 @@ namespace GamificationApp.Shared.Models
         public int UserID { get; set; }
         [ForeignKey("UserID")]
         public virtual User? RelatedTeacher { get; set; }
+        // TODO: Why do i need this?
         public int TestID { get; set; }
         [ForeignKey("TestID")]
         public virtual List<Test>? RelatedTests { get; set; }
