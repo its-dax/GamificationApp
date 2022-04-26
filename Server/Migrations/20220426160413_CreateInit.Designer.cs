@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamificationApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220426140503_CreateInit")]
+    [Migration("20220426160413_CreateInit")]
     partial class CreateInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,6 +177,9 @@ namespace GamificationApp.Server.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

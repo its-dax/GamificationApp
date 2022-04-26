@@ -15,5 +15,12 @@ namespace GamificationApp.Shared.Models
         public string Password { get; set; }
         public string Name { get; set; }
         public virtual List<Score>? Scores { get; set; }
+        public Roles Role { get; set; }
+
+        public enum Roles
+        {
+            Student,
+            Teacher
+        }
     }
 }
