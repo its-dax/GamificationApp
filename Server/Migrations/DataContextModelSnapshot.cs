@@ -53,24 +53,17 @@ namespace GamificationApp.Server.Migrations
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SubjectID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TestId")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SubjectID");
-
-                    b.HasIndex("TestId");
 
                     b.ToTable("Questions");
                 });
@@ -86,17 +79,13 @@ namespace GamificationApp.Server.Migrations
                     b.Property<int>("Points")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubjectID")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SubjectID");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Scores");
                 });
@@ -109,19 +98,14 @@ namespace GamificationApp.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("TestID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("Subjects");
                 });
@@ -143,15 +127,13 @@ namespace GamificationApp.Server.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("TestID")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.Property<int>("TestTimeInMinutes")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TestID");
 
                     b.ToTable("Tests");
                 });
@@ -182,69 +164,6 @@ namespace GamificationApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("GamificationApp.Shared.Models.Question", b =>
-                {
-                    b.HasOne("GamificationApp.Shared.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GamificationApp.Shared.Models.Test", null)
-                        .WithMany("Questions")
-                        .HasForeignKey("TestId");
-
-                    b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("GamificationApp.Shared.Models.Score", b =>
-                {
-                    b.HasOne("GamificationApp.Shared.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GamificationApp.Shared.Models.User", null)
-                        .WithMany("Scores")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("GamificationApp.Shared.Models.Subject", b =>
-                {
-                    b.HasOne("GamificationApp.Shared.Models.User", "RelatedTeacher")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RelatedTeacher");
-                });
-
-            modelBuilder.Entity("GamificationApp.Shared.Models.Test", b =>
-                {
-                    b.HasOne("GamificationApp.Shared.Models.Subject", null)
-                        .WithMany("RelatedTests")
-                        .HasForeignKey("TestID");
-                });
-
-            modelBuilder.Entity("GamificationApp.Shared.Models.Subject", b =>
-                {
-                    b.Navigation("RelatedTests");
-                });
-
-            modelBuilder.Entity("GamificationApp.Shared.Models.Test", b =>
-                {
-                    b.Navigation("Questions");
-                });
-
-            modelBuilder.Entity("GamificationApp.Shared.Models.User", b =>
-                {
-                    b.Navigation("Scores");
                 });
 #pragma warning restore 612, 618
         }

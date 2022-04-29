@@ -38,5 +38,9 @@
     <ProjectReference Include="..\Shared\GamificationApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 
 </Project>

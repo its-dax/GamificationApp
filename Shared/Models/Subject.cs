@@ -10,18 +10,8 @@ namespace GamificationApp.Shared.Models
 {
     public class Subject
     {
-        [Key]
         public int Id { get; set; }
-        public string Title { get; set; }
-
-        public int UserID { get; set; }
-        [ForeignKey("UserID")]
-        public virtual User? RelatedTeacher { get; set; }
-        // TODO: Why do i need this?
-        public int TestID { get; set; }
-        [ForeignKey("TestID")]
-        public virtual List<Test>? RelatedTests { get; set; }
-
-
+        public int UserId { get; set; }
+        public string Name { get; set; }
     }
 }
