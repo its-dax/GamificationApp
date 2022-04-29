@@ -15,6 +15,5 @@ namespace GamificationApp.Shared.Models
         public int NumberOfQuestions { get; set; }
         public DateTime StartTime { get; set; }
         public int TestTimeInMinutes { get; set; }
-        public int GoodAnswers { get; set; }
     }
 }
