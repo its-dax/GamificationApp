@@ -1,5 +1,6 @@
 using GamificationApp.Server.Data;
 using GamificationApp.Server.Repositories;
+using GamificationApp.Server.Repositories.Interfaces;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 
 var app = builder.Build();
 
