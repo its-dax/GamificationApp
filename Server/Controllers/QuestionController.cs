@@ -19,7 +19,7 @@ namespace GamificationApp.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<QuestionDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuestions()
         {
             try
             {
