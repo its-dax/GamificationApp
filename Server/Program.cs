@@ -3,6 +3,7 @@ using GamificationApp.Server.Repositories;
 using GamificationApp.Server.Repositories.Interfaces;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,10 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseCors(policy => policy.WithOrigins("https://localhost:7216", "https://localhost:7216")
+    .AllowAnyMethod()
+    .WithHeaders(HeaderNames.ContentType));
 
 app.UseHttpsRedirection();
 app.UseSwagger();

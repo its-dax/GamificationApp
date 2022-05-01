@@ -33,8 +33,4 @@
     <ProjectReference Include="..\Shared\GamificationApp.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Contracts\" />
-  </ItemGroup>
-
 </Project>
