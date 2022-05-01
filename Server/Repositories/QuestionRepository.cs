@@ -7,15 +7,15 @@ namespace GamificationApp.Server.Repositories
 {
     public class QuestionRepository : IQuestionRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly DataContext dataContext;
 
         public QuestionRepository(DataContext dataContext)
         {
-            _dataContext = dataContext;
+            this.dataContext = dataContext;
         }
         public async Task<IEnumerable<Question>> GetQuestions()
         {
-            var questions = await _dataContext.Questions.ToListAsync();
+            var questions = await this.dataContext.Questions.ToListAsync();
             return questions;
         }
 
@@ -26,7 +26,7 @@ namespace GamificationApp.Server.Repositories
 
         public async Task<IEnumerable<Subject>> GetSubjects()
         {
-            var subjects = await _dataContext.Subjects.ToListAsync();
+            var subjects = await this.dataContext.Subjects.ToListAsync();
             return subjects;
         }
 

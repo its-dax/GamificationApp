@@ -6,18 +6,18 @@ namespace GamificationApp.Client.Services
 {
     public class QuestionService : IQuestionService
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient httpClient;
 
         public QuestionService(HttpClient httpClient)
         {
-            _httpClient = httpClient;
+            this.httpClient = httpClient;
         }
 
         public async Task<IEnumerable<QuestionDto>> GetQuestions()
         {
             try
             {
-                var questions = await _httpClient.GetFromJsonAsync<IEnumerable<QuestionDto>>("api/Questions");
+                var questions = await this.httpClient.GetFromJsonAsync<IEnumerable<QuestionDto>>("api/Question");
                 return questions;
             }
             catch (Exception)

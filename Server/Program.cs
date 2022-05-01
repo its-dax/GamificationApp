@@ -34,7 +34,7 @@ else
     app.UseHsts();
 }
 
-app.UseCors(policy => policy.WithOrigins("https://localhost:7216", "https://localhost:7216")
+app.UseCors(policy => policy.WithOrigins("http://localhost:47630", "https://localhost:47630", "http://localhost:5216", "https://localhost:5216", "http://localhost:7216", "https://localhost:7216")
     .AllowAnyMethod()
     .WithHeaders(HeaderNames.ContentType));
 

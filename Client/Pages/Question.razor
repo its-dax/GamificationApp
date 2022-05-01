@@ -1,4 +1,4 @@
-﻿@page "/Questions"
+﻿@page "/Question"
 @inherits QuestionsBase
 
 <h3>Questions</h3>
@@ -9,15 +9,15 @@
 }
 else
 {
-    var questions = new List<QuestionDto>();
+    var questions = Questions ;
     var approvedQuestions = questions.Where(q => q.IsApproved);
     var notApprovedQuestions = questions.Where(q => (q.IsApproved == false));
-
+    <h2>Approved questions</h2>
     @if (approvedQuestions.Any())
     {
         foreach (var approvedQuestionDto in approvedQuestions)
         {
-            <div class="col-1">
+            <div class="col-auto">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title mb-3">
@@ -40,12 +40,14 @@ else
             </div>
         }
     }
+    <h2>Unapproved questions</h2>
+    
 
     @if (notApprovedQuestions.Any())
     {
         foreach (var notApprovedQuestionDto in notApprovedQuestions)
         {
-            <div class="col-1">
+            <div class="col-auto">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title mb-3">

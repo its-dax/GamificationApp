@@ -11,11 +11,11 @@ namespace GamificationApp.Server.Controllers
     [ApiController]
     public class QuestionController : ControllerBase
     {
-        private readonly IQuestionRepository _questionRepository;
+        private readonly IQuestionRepository questionRepository;
 
         public QuestionController(IQuestionRepository questionRepository)
         {
-            _questionRepository = questionRepository;
+            this.questionRepository = questionRepository;
         }
 
         [HttpGet]
@@ -23,8 +23,8 @@ namespace GamificationApp.Server.Controllers
         {
             try
             {
-                var questions = await _questionRepository.GetQuestions();
-                var subjects = await _questionRepository.GetSubjects();
+                var questions = await this.questionRepository.GetQuestions();
+                var subjects = await this.questionRepository.GetSubjects();
 
                 if (questions is null || subjects is null)
                 {
