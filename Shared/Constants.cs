@@ -8,6 +8,7 @@ namespace GamificationApp.Shared
 {
     public class Constants
     {
-
+        //TODO
+        public const string BaseAddress = "Localhost"; 
     }
 }

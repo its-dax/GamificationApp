@@ -33,6 +33,5 @@
 
   <ItemGroup>
     <Folder Include="Authentication\" />
-    <Folder Include="DTOs\" />
   </ItemGroup>
 </Project>
