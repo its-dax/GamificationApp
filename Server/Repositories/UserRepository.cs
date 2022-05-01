@@ -1,12 +1,21 @@
-﻿using GamificationApp.Shared.Models;
+﻿using GamificationApp.Server.Data;
+using GamificationApp.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GamificationApp.Server.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public Task<IEnumerable<User>> GetUsers()
+        private readonly DataContext _dataContext;
+
+        public UserRepository(DataContext dataContext)
         {
-            throw new NotImplementedException();
+            _dataContext = dataContext;
+        }
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            var users = await _dataContext.Users.ToListAsync();
+            return users;
         }
 
         public Task<IEnumerable<User>> GetUser(int id)
