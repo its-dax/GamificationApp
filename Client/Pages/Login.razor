@@ -6,12 +6,8 @@
 <div><b>Az alkalmazás használatához jelentkezzen be!</b></div>
 <hr/>
 <br/>
-<AuthorizeView>
-    <Authorized>
-        You are logged in.
-    </Authorized>
-    <NotAuthorized>
-        <EditForm Model="user" OnSubmit="HandleLogin">
+
+<EditForm Model="user" OnSubmit="HandleLogin">
     <div>
         <label for="Code">Kód</label>
         <InputText id= "Code" @bind-Value="user.Code" />
@@ -22,9 +18,6 @@
     </div>
     <div><button class="btn btn-primary" type="submit">Belépés</button></div>
 </EditForm>
-    </NotAuthorized>
-</AuthorizeView>
-
 
 @code {
     LoginDto user = new LoginDto();
