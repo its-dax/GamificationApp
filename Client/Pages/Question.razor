@@ -13,7 +13,7 @@ else
     var approvedQuestions = questions.Where(q => q.IsApproved);
     var notApprovedQuestions = questions.Where(q => (q.IsApproved == false));
 
-    <AuthorizeView>
+    <AuthorizeView Roles="Teacher">
         <Authorized>
             <h2>Approved questions</h2>
             @if (approvedQuestions.Any())

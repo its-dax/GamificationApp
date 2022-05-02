@@ -73,6 +73,16 @@ namespace GamificationApp.Server.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Name),
             };
+            if(user.Role == 0)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Student"));
+            }
+            else
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Teacher"));
+
+            }
+            
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Token").Value));
 
