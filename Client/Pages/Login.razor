@@ -2,21 +2,21 @@
 @inject HttpClient http
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService LocalStorage
+@attribute [AllowAnonymous]
 
 <div><b>Az alkalmazás használatához jelentkezzen be!</b></div>
 <hr/>
 <br/>
-
 <EditForm Model="user" OnSubmit="HandleLogin">
-    <div>
-        <label for="Code">Kód</label>
-        <InputText id= "Code" @bind-Value="user.Code" />
-    </div>
-    <div>
-        <label for="Password">Jelszó</label>
-        <InputText type="password" id="Password"  @bind-Value="user.Password" />
-    </div>
-    <div><button class="btn btn-primary" type="submit">Belépés</button></div>
+<div>
+    <label for="Code">Kód</label>
+    <InputText id= "Code" @bind-Value="user.Code" />
+</div>
+<div>
+    <label for="Password">Jelszó</label>
+    <InputText type="password" id="Password"  @bind-Value="user.Password" />
+</div>
+<div><button class="btn btn-primary" type="submit">Belépés</button></div>
 </EditForm>
 
 @code {
