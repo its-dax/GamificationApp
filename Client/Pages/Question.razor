@@ -12,62 +12,70 @@ else
     var questions = Questions ;
     var approvedQuestions = questions.Where(q => q.IsApproved);
     var notApprovedQuestions = questions.Where(q => (q.IsApproved == false));
-    <h2>Approved questions</h2>
-    @if (approvedQuestions.Any())
-    {
-        foreach (var approvedQuestionDto in approvedQuestions)
-        {
-            <div class="col-auto">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">
-                            @approvedQuestionDto.Title
-                        </h5>
-                        <p class="card-text">
-                            @approvedQuestionDto.A
-                        </p>
-                        <p class="card-text">
-                            @approvedQuestionDto.B
-                        </p>
-                        <p class="card-text">
-                            @approvedQuestionDto.C
-                        </p>
-                        <p class="card-text">
-                            @approvedQuestionDto.D
-                        </p>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-    <h2>Unapproved questions</h2>
-    
 
-    @if (notApprovedQuestions.Any())
-    {
-        foreach (var notApprovedQuestionDto in notApprovedQuestions)
-        {
-            <div class="col-auto">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">
-                            @notApprovedQuestionDto.Title
-                        </h5>
-                        <p class="card-text">
-                            @notApprovedQuestionDto.A
-                        </p>
-                        <p class="card-text">
-                            @notApprovedQuestionDto.B
-                        </p>
-                        <p class="card-text">
-                            @notApprovedQuestionDto.C
-                        </p>
-                        <p class="card-text">
-                            @notApprovedQuestionDto.D
-                        </p>
+    <AuthorizeView>
+        <Authorized>
+            <h2>Approved questions</h2>
+            @if (approvedQuestions.Any())
+            {
+                foreach (var approvedQuestionDto in approvedQuestions)
+                {
+                    <div class="col-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">
+                                    @approvedQuestionDto.Title
+                                </h5>
+                                <p class="card-text">
+                                    <b>A)</b> @approvedQuestionDto.A
+                                </p>
+                                <p class="card-text">
+                                    <b>B)</b> @approvedQuestionDto.B
+                                </p>
+                                <p class="card-text">
+                                    <b>C)</b> @approvedQuestionDto.C
+                                </p>
+                                <p class="card-text">
+                                    <b>D)</b> @approvedQuestionDto.D
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        }
-    }
+                }
+            }
+        </Authorized>
+    </AuthorizeView>
+    <AuthorizeView>
+        <NotAuthorized>
+            <h2>Unapproved questions</h2>
+
+            @if (notApprovedQuestions.Any())
+            {
+                foreach (var notApprovedQuestionDto in notApprovedQuestions)
+                {
+                    <div class="col-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">
+                                    @notApprovedQuestionDto.Title
+                                </h5>
+                                <p class="card-text">
+                                    <b>A)</b> @notApprovedQuestionDto.A
+                                </p>
+                                <p class="card-text">
+                                    <b>B)</b> @notApprovedQuestionDto.B
+                                </p>
+                                <p class="card-text">
+                                    <b>C)</b> @notApprovedQuestionDto.C
+                                </p>
+                                <p class="card-text">
+                                    <b>D)</b> @notApprovedQuestionDto.D
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </NotAuthorized>
+    </AuthorizeView>
 }

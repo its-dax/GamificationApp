@@ -1,7 +1,32 @@
 ﻿@page "/"
+@inject HttpClient http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
 
-<h5>Az alkalmazás használatához jelentkezzen be.</h5>
+<div><b>Az alkalmazás használatához jelentkezzen be!</b></div>
+<hr/>
+<br/>
+
+<EditForm Model="user" OnSubmit="HandleLogin">
+    <div>
+        <label for="Code">Kód</label>
+        <InputText id= "Code" @bind-Value="user.Code" />
+    </div>
+    <div>
+        <label for="Password">Jelszó</label>
+        <InputText type="password" id="Password"  @bind-Value="user.Password" />
+    </div>
+    <div><button class="btn btn-primary" type="submit">Belépés</button></div>
+</EditForm>
 
 @code {
+    LoginDto user = new LoginDto();
 
+    async Task HandleLogin()
+    {
+        var result = await http.PostAsJsonAsync("api/auth", user);
+        var token = await result.Content.ReadAsStringAsync();
+        await LocalStorage.SetItemAsync("token", token);
+        await AuthStateProvider.GetAuthenticationStateAsync();
+    }
 }
