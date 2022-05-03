@@ -27,8 +27,8 @@ namespace GamificationApp.Server.Extensions
         }
 
         public static IEnumerable<ScoreDto> ConvertToDto(this IEnumerable<Score> scores, 
-                                                            IEnumerable<Subject> subjects, 
-                                                            IEnumerable<User> users)
+                                                                IEnumerable<Subject> subjects, 
+                                                                IEnumerable<User> users)
         {
             return (from score in scores
                     join subject in subjects
@@ -43,6 +43,23 @@ namespace GamificationApp.Server.Extensions
                         UserName = user.Name,
                         SubjectName = subject.Name,
                         Points = score.Points
+                    }).ToList();
+        }
+
+        public static IEnumerable<TestDto> ConvertToDto(this IEnumerable<Test> tests, 
+                                                            IEnumerable<Subject> subjects)
+        {
+            return (from test in tests
+                    join subject in subjects
+                    on test.SubjectId equals subject.Id
+                    select new TestDto()
+                    {
+                        Id = test.Id,
+                        SubjectId = test.SubjectId,
+                        SubjectName = subject.Name,
+                        NumberOfQuestions = test.NumberOfQuestions,
+                        StartTime = test.StartTime,
+                        TestTimeInMinutes = test.TestTimeInMinutes
                     }).ToList();
         }
     }
