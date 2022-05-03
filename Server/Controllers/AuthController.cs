@@ -28,23 +28,31 @@ namespace GamificationApp.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> Login(LoginDto request)
         {
+            try
+            {
+                var users = await _userRepository.GetUsers();
+
+                if (users is null)
+                {
+                    return NotFound();
+                }
+
+                var currentUser = users.First(u => u.Code == request.Code && u.Password == request.Password);
+
+                if (currentUser is null)
+                {
+                    return NotFound();
+                }
+
+                string token = CreateToken(currentUser);
+                return Ok(token);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Hiba a bejelentkezésben.");
+            }
             
-            var users = await _userRepository.GetUsers();
-
-            if (users is null)
-            {
-                return NotFound();
-            }
-
-            var currentUser = users.First(u => u.Code == request.Code && u.Password == request.Password);
-
-            if (currentUser is null)
-            {
-                return NotFound();
-            }
-
-            string token = CreateToken(currentUser);
-            return Ok(token);
         }
 
         private string CreateToken(User user)
