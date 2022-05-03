@@ -19,9 +19,10 @@ namespace GamificationApp.Server.Repositories
             return questions;
         }
 
-        public async Task<IEnumerable<Question>> GetQuestion(int id)
+        public async Task<Question> GetQuestion(int id)
         {
-            throw new NotImplementedException();
+            var question = await dataContext.Questions.SingleOrDefaultAsync(q => q.Id == id);
+            return question;
         }
 
         public async Task<IEnumerable<Subject>> GetSubjects()
@@ -30,9 +31,10 @@ namespace GamificationApp.Server.Repositories
             return subjects;
         }
 
-        public async Task<IEnumerable<Subject>> GetSubject(int id)
+        public async Task<Subject> GetSubject(int id)
         {
-            throw new NotImplementedException();
+            var subject = await dataContext.Subjects.SingleOrDefaultAsync(s => s.Id == id);
+            return subject;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace GamificationApp.Server.Repositories
     public interface IUserRepository
     {
         Task<IEnumerable<User>> GetUsers();
-        Task<IEnumerable<User>> GetUser(int id);
+        Task<User> GetUser(int id);
 
     }
 }

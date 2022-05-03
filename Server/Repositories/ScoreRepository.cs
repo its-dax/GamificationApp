@@ -14,7 +14,7 @@ namespace GamificationApp.Server.Repositories
         {
             _dataContext = dataContext;
         }
-        public Task<IEnumerable<Score>> GetScore(int id)
+        public Task<Score> GetScore(int id)
         {
             throw new NotImplementedException();
         }
@@ -25,20 +25,22 @@ namespace GamificationApp.Server.Repositories
             return scores;
         }
 
-        public Task<IEnumerable<Subject>> GetSubject(int id)
+        public async Task<Subject> GetSubject(int id)
         {
-            throw new NotImplementedException();
+            var subject = await _dataContext.Subjects.SingleOrDefaultAsync(s => s.Id == id);
+            return subject;
         }
 
-        public async Task<IEnumerable<Subject>> GetSubjects()
+            public async Task<IEnumerable<Subject>> GetSubjects()
         {
             var subjects = await _dataContext.Subjects.ToListAsync();
             return subjects;
         }
 
-        public Task<IEnumerable<User>> GetUser(int id)
+        public async Task<User> GetUser(int id)
         {
-            throw new NotImplementedException();
+            var user = await _dataContext.Users.SingleOrDefaultAsync(u => u.Id == id);
+            return user;
         }
 
         public async Task<IEnumerable<User>> GetUsers()

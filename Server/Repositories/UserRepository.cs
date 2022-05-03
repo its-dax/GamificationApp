@@ -18,9 +18,10 @@ namespace GamificationApp.Server.Repositories
             return users;
         }
 
-        public Task<IEnumerable<User>> GetUser(int id)
+        public async Task<User> GetUser(int id)
         {
-            throw new NotImplementedException();
+            var user = await _dataContext.Users.SingleOrDefaultAsync(x => x.Id == id);
+            return user;
         }
     }
 }

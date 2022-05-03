@@ -6,10 +6,10 @@ namespace GamificationApp.Server.Repositories.Interfaces
     {
 
         Task<IEnumerable<Score>> GetScores();
-        Task<IEnumerable<Score>> GetScore(int id);
+        Task<Score> GetScore(int id);
         Task<IEnumerable<Subject>> GetSubjects();
-        Task<IEnumerable<Subject>> GetSubject(int id);
+        Task<Subject> GetSubject(int id);
         Task<IEnumerable<User>> GetUsers();
-        Task<IEnumerable<User>> GetUser(int id);
+        Task<User> GetUser(int id);
     }
 }
