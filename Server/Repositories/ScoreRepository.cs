@@ -20,11 +20,11 @@ namespace GamificationApp.Server.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Score>> GetScores()
-        {
-            var scores = await _dataContext.Scores.ToListAsync();
-            return scores;
-        }
+        //public async Task<IEnumerable<Score>> GetScores()
+        //{
+        //    var scores = await _dataContext.Scores.ToListAsync();
+        //    return scores;
+        //}
 
         public async Task<IEnumerable<Score>> GetScoresByStudent(int userId)
         {
@@ -60,33 +60,17 @@ namespace GamificationApp.Server.Repositories
                          }).ToListAsync();
         }
 
-        public async Task<Subject> GetSubject(int id)
-        {
-            var subject = await _dataContext.Subjects.SingleOrDefaultAsync(s => s.Id == id);
-            return subject;
-        }
 
-            public async Task<IEnumerable<Subject>> GetSubjects()
+        public async Task<Score> UpdateScore(int id, ScoreQtyUpdateDto scoreQtyUpdateDto)
         {
-            var subjects = await _dataContext.Subjects.ToListAsync();
-            return subjects;
-        }
-
-        public async Task<User> GetUser(int id)
-        {
-            var user = await _dataContext.Users.SingleOrDefaultAsync(u => u.Id == id);
-            return user;
-        }
-
-        public async Task<IEnumerable<User>> GetUsers()
-        {
-            var users = await _dataContext.Users.ToListAsync();
-            return users;
-        }
-
-        public Task<Score> UpdateScore(int id, ScoreQtyUpdateDto scoreQtyUpdateDto)
-        {
-            throw new NotImplementedException();
+            var score = await _dataContext.Scores.FindAsync(id);
+            if (score is not null)
+            {
+                score.Points += scoreQtyUpdateDto.Qty;
+                await _dataContext.SaveChangesAsync();
+                return score;
+            }
+            return null;
         }
     }
 }

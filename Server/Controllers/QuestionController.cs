@@ -12,10 +12,12 @@ namespace GamificationApp.Server.Controllers
     public class QuestionController : ControllerBase
     {
         private readonly IQuestionRepository questionRepository;
+        private readonly ISubjectRepository subjectRepository;
 
-        public QuestionController(IQuestionRepository questionRepository)
+        public QuestionController(IQuestionRepository questionRepository, ISubjectRepository subjectRepository)
         {
             this.questionRepository = questionRepository;
+            this.subjectRepository = subjectRepository;
         }
 
         [HttpGet]
@@ -24,7 +26,7 @@ namespace GamificationApp.Server.Controllers
             try
             {
                 var questions = await this.questionRepository.GetQuestions();
-                var subjects = await this.questionRepository.GetSubjects();
+                var subjects = await this.subjectRepository.GetSubjects();
 
                 if (questions is null || subjects is null)
                 {
@@ -42,6 +44,7 @@ namespace GamificationApp.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
             }
         }
+
         [HttpGet("{id:int}")]
         public async Task<ActionResult<QuestionDto>> GetQuestion(int id)
         {
@@ -55,7 +58,7 @@ namespace GamificationApp.Server.Controllers
                 }
                 else
                 {
-                    var subject = await this.questionRepository.GetSubject(question.SubjectId);
+                    var subject = await this.subjectRepository.GetSubject(question.SubjectId);
                     var questionDto = question.ConvertToDto(subject);
                     return Ok(questionDto);
                 }

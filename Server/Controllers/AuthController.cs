@@ -25,26 +25,6 @@ namespace GamificationApp.Server.Controllers
             _userRepository = userRepository;
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
-        //{
-        //    try
-        //    {
-        //        var users = await _userRepository.GetUsers();
-
-        //        if (users is null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        return Ok(users);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-
         [HttpPost]
         public async Task<ActionResult<string>> Login(LoginDto request)
         {
@@ -71,8 +51,9 @@ namespace GamificationApp.Server.Controllers
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Name),
+                new Claim(ClaimTypes.Name, user.Code),
             };
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Name));
             if(user.Role == 0)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Student"));

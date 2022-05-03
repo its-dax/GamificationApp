@@ -8,7 +8,7 @@ namespace GamificationApp.Server.Extensions
         //Question DTO conversions
 
         public static IEnumerable<QuestionDto> ConvertToDto(this IEnumerable<Question> questions,
-            IEnumerable<Subject> subjects)
+             IEnumerable<Subject> subjects)
         {
             return (from question in questions
                     join subject in subjects
@@ -65,6 +65,20 @@ namespace GamificationApp.Server.Extensions
                         SubjectName = subject.Name,
                         Points = score.Points
                     }).ToList();
+        }
+
+        public static ScoreDto ConvertToDto(this Score score,
+                                                Subject subject,
+                                                User user)
+        {
+            return new ScoreDto
+            {
+                Id=score.Id,
+                SubjectId=score.SubjectId,
+                UserId=score.UserId,
+                SubjectName=subject.Name,
+                UserName = user.Name
+            };
         }
 
         public static IEnumerable<TestDto> ConvertToDto(this IEnumerable<Test> tests, 

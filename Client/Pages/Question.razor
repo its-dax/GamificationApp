@@ -12,7 +12,8 @@ else
     var questions = Questions ;
     var approvedQuestions = questions.Where(q => q.IsApproved);
     var notApprovedQuestions = questions.Where(q => (q.IsApproved == false));
-
+    
+                
     <AuthorizeView Roles="Teacher">
         <Authorized>
             <h2>Approved questions</h2>

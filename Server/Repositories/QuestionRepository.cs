@@ -25,18 +25,7 @@ namespace GamificationApp.Server.Repositories
             return question;
         }
 
-        public async Task<IEnumerable<Subject>> GetSubjects()
-        {
-            var subjects = await this.dataContext.Subjects.ToListAsync();
-            return subjects;
-        }
-
-        public async Task<Subject> GetSubject(int id)
-        {
-            var subject = await dataContext.Subjects.SingleOrDefaultAsync(s => s.Id == id);
-            return subject;
-        }
-
+      
         //public async Task<IEnumerable<Question>> GetQuestionsBySubject(int subjectId)
         //{
         //    var questions = await this.dataContext.Questions.Include(q=> q.

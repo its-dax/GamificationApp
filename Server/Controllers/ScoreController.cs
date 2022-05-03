@@ -1,4 +1,5 @@
 ﻿using GamificationApp.Server.Extensions;
+using GamificationApp.Server.Repositories;
 using GamificationApp.Server.Repositories.Interfaces;
 using GamificationApp.Shared.DTOs;
 using Microsoft.AspNetCore.Http;
@@ -11,35 +12,85 @@ namespace GamificationApp.Server.Controllers
     public class ScoreController : ControllerBase
     {
         private readonly IScoreRepository _scoreRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly ISubjectRepository _subjectRepository;
 
-        public ScoreController(IScoreRepository ScoreRepository)
+        public ScoreController(IScoreRepository ScoreRepository, IUserRepository userRepository, ISubjectRepository subjectRepository)
         {
             _scoreRepository = ScoreRepository;
+            _userRepository = userRepository;
+            _subjectRepository = subjectRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ScoreDto>>> GetScores()
+        [Route("{userId}/GetScoresByUser")]
+        public async Task<ActionResult<IEnumerable<ScoreDto>>> GetScoresByUser(int userId)
         {
             try
             {
-                var scores = await _scoreRepository.GetScores();
-                var subjects = await _scoreRepository.GetSubjects();
-                var users = await _scoreRepository.GetUsers();
-
-                if (scores is null || users is null || subjects is null)
+                var scores = await _scoreRepository.GetScoresByStudent(userId);
+                if (scores == null)
                 {
-                    return NotFound();
+                    return NoContent();
                 }
-                else
-                {
-                    var scoresDto = scores.ConvertToDto(subjects, users);
-                    return Ok(scoresDto);
-                }
+                var subjects = await _subjectRepository.GetSubjects();
+                var users = await _userRepository.GetUsers();
 
+                var scoresDto = scores.ConvertToDto(subjects, users);
+
+                return Ok(scoresDto);
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
+            }
+        }
+
+        [HttpGet]
+        [Route("{subjectId}/GetScoresBySubject")]
+        public async Task<ActionResult<IEnumerable<ScoreDto>>> GetScoresBySubject(int subjectId)
+        {
+            try
+            {
+                var scores = await _scoreRepository.GetScoresBySubject(subjectId);
+                if (scores == null)
+                {
+                    return NoContent();
+                }
+                var subjects = await _subjectRepository.GetSubjects();
+                var users = await _userRepository.GetUsers();
+
+                var scoresDto = scores.ConvertToDto(subjects, users);
+
+                return Ok(scoresDto);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
+            }
+        }
+
+        public async Task<ActionResult<ScoreQtyUpdateDto>> UpdateQty(int id, ScoreQtyUpdateDto scoreQtyUpdateDto)
+        {
+            try
+            {
+                var score = await _scoreRepository.UpdateScore(id, scoreQtyUpdateDto);
+                if (score == null)
+                {
+                    return NotFound();
+                }
+
+                var subjects = await _subjectRepository.GetSubject(score.SubjectId);
+                var users = await _userRepository.GetUser(score.UserId);
+
+                var scoresDto = score.ConvertToDto(subjects, users);
+
+                return Ok(scoresDto);
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
