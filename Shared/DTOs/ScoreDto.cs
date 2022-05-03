@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GamificationApp.Shared.DTOs
 {
-    public class ScoreDTO
+    public class ScoreDto
     {
         public int Id { get; set; }
         public int UserId { get; set; }

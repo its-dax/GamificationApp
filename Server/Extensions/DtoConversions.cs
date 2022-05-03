@@ -25,5 +25,25 @@ namespace GamificationApp.Server.Extensions
                     SubjectName = subject.Name
                 }).ToList();
         }
+
+        public static IEnumerable<ScoreDto> ConvertToDto(this IEnumerable<Score> scores, 
+                                                            IEnumerable<Subject> subjects, 
+                                                            IEnumerable<User> users)
+        {
+            return (from score in scores
+                    join subject in subjects
+                        on score.SubjectId equals subject.Id
+                    join user in users
+                        on score.UserId equals user.Id
+                    select new ScoreDto()
+                    {
+                        Id = score.Id,
+                        UserId = score.UserId,
+                        SubjectId = score.SubjectId,
+                        UserName = user.Name,
+                        SubjectName = subject.Name,
+                        Points = score.Points
+                    }).ToList();
+        }
     }
 }
