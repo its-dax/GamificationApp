@@ -36,5 +36,10 @@ namespace GamificationApp.Server.Repositories
             var subject = await dataContext.Subjects.SingleOrDefaultAsync(s => s.Id == id);
             return subject;
         }
+
+        //public async Task<IEnumerable<Question>> GetQuestionsBySubject(int subjectId)
+        //{
+        //    var questions = await this.dataContext.Questions.Include(q=> q.
+        //}
     }
 }

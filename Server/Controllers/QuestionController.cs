@@ -42,5 +42,29 @@ namespace GamificationApp.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
             }
         }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<QuestionDto>> GetQuestion(int id)
+        {
+            try
+            {
+                var question = await this.questionRepository.GetQuestion(id);
+
+                if (question is null )
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    var subject = await this.questionRepository.GetSubject(question.SubjectId);
+                    var questionDto = question.ConvertToDto(subject);
+                    return Ok(questionDto);
+                }
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
+            }
+        }
     }
 }
