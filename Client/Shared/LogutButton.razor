@@ -7,6 +7,7 @@
         <button @onclick="Logout" class="btn btn-danger">Kijelentkezés</button>
     </Authorized>
     <NotAuthorized>
+        <button @onclick="Login" class="btn btn-primary">Bejelentkezés</button>
     </NotAuthorized>
 </AuthorizeView>
 
@@ -15,5 +16,10 @@
     {
         await LocalStorage.RemoveItemAsync("token");
         await AuthStateProvider.GetAuthenticationStateAsync();
+    }
+
+    void Login()
+    {
+        NavManager.NavigateTo("login");
     }
 }

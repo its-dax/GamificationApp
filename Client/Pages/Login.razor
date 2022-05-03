@@ -1,7 +1,8 @@
-﻿@page "/"
+﻿@page "/login"
 @inject HttpClient http
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService LocalStorage
+@inject NavigationManager NavMgr
 @attribute [AllowAnonymous]
 
 <div><b>Az alkalmazás használatához jelentkezzen be!</b></div>
@@ -10,12 +11,18 @@
 <EditForm Model="user" OnSubmit="HandleLogin">
 <div>
     <label for="Code">Kód</label>
+    
+</div>
+<div>
     <InputText id= "Code" @bind-Value="user.Code" />
 </div>
 <div>
     <label for="Password">Jelszó</label>
+</div>
+<div>
     <InputText type="password" id="Password"  @bind-Value="user.Password" />
 </div>
+<br/>
 <div><button class="btn btn-primary" type="submit">Belépés</button></div>
 </EditForm>
 
@@ -28,5 +35,6 @@
         var token = await result.Content.ReadAsStringAsync();
         await LocalStorage.SetItemAsync("token", token);
         await AuthStateProvider.GetAuthenticationStateAsync();
+        NavMgr.NavigateTo("/");
     }
 }
