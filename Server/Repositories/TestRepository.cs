@@ -1,5 +1,6 @@
 ﻿using GamificationApp.Server.Data;
 using GamificationApp.Server.Repositories.Interfaces;
+using GamificationApp.Shared.DTOs;
 using GamificationApp.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,15 @@ namespace GamificationApp.Server.Repositories
         public TestRepository(DataContext dataContext)
         {
             this.dataContext = dataContext;
+        }
+
+        public async Task<Test> AddTest(TestDto testDto)
+        {
+            //    var test = await ()
+            //var result = await this.dataContext.Tests.AddAsync(Test);
+            //    await this.dataContext.SaveChangesAsync();
+            //    return result.Entity;
+            return null;
         }
 
         public async Task<Subject> GetSubject(int id)
