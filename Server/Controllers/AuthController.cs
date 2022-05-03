@@ -61,7 +61,7 @@ namespace GamificationApp.Server.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Code),
             };
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Name));
+            claims.Add(new Claim("Id", user.Id.ToString()));
             if(user.Role == 0)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Student"));

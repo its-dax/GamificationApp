@@ -11,10 +11,12 @@ namespace GamificationApp.Server.Controllers
     public class TestController : ControllerBase
     {
         private readonly ITestRepository testRepository;
+        private readonly ISubjectRepository subjectRepository;
 
-        public TestController(ITestRepository testRepository)
+        public TestController(ITestRepository testRepository, ISubjectRepository subjectRepository)
         {
             this.testRepository = testRepository;
+            this.subjectRepository = subjectRepository;
         }
 
         [HttpGet]
@@ -23,7 +25,7 @@ namespace GamificationApp.Server.Controllers
             try
             {
                 var tests = await this.testRepository.GetTests();
-                var subjects = await this.testRepository.GetSubjects();
+                var subjects = await this.subjectRepository.GetSubjects();
 
                 if (tests is null || subjects is null)
                 {

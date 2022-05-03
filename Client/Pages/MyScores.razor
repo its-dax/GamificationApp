@@ -1,0 +1,29 @@
+﻿@page "/MyScores/{Id:int}"
+@inherits ScoreBase
+
+@if(Scores is null && ErrorMessage is null)
+{
+    <h4>Kérdés betöltése</h4>
+}
+else if (ErrorMessage is not null)
+{
+    <Displayerror ErrorMessage="@ErrorMessage"></Displayerror>
+}
+else
+{
+    foreach (var score in Scores)
+    {
+        <div class="col-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">
+                        <b>Tantárgy: </b>@score.SubjectName
+                    </h5>
+                    <p class="card-text">
+                        <b>Pontszám: </b> @score.Points
+                    </p>
+                </div>
+            </div>
+        </div>
+    }  
+}

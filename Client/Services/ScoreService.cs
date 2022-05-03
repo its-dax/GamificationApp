@@ -14,14 +14,58 @@ namespace GamificationApp.Client.Services
         {
             _httpClient = httpClient;
         }
-        public Task<List<ScoreDto>> GetScoreByStudent(int userId)
+        public async Task<IEnumerable<ScoreDto>> GetScoreByStudent(int userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/Score/{userId}/GetScoresByStudent");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return Enumerable.Empty<ScoreDto>();
+                    }
+
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<ScoreDto>>();
+                }
+                else
+                {
+                    var msg = await response.Content.ReadAsStringAsync();
+                    throw new Exception(msg);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<List<ScoreDto>> GetScoreBySubject(int subjectId)
+        public async Task<IEnumerable<ScoreDto>> GetScoreBySubject(int subjectId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/{subjectId}/GetScoresBySubject");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return Enumerable.Empty<ScoreDto>();
+                    }
+
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<ScoreDto>>();
+                }
+                else
+                {
+                    var msg = await response.Content.ReadAsStringAsync();
+                    throw new Exception(msg);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<ScoreDto> UpdatePoints(ScoreQtyUpdateDto scoreQtyUpdateDto)

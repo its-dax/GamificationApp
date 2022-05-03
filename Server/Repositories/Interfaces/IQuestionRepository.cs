@@ -6,5 +6,6 @@ namespace GamificationApp.Server.Repositories.Interfaces
     {
         Task<IEnumerable<Question>> GetQuestions();
         Task<Question> GetQuestion(int id);
+        Task<Question> AddQuestion(int id);
     }
 }

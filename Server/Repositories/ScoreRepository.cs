@@ -29,34 +29,34 @@ namespace GamificationApp.Server.Repositories
         public async Task<IEnumerable<Score>> GetScoresByStudent(int userId)
         {
             return await (from score in _dataContext.Scores
-                          join user in _dataContext.Users
-                            on score.UserId equals user.Id
-                            join subject in _dataContext.Subjects
-                            on score.SubjectId equals subject.Id
-                          where user.Id == userId
+                          //join user in _dataContext.Users
+                          //  on score.UserId equals user.Id
+                          //  join subject in _dataContext.Subjects
+                          //  on score.SubjectId equals subject.Id
+                          where score.UserId == userId
                           select new Score
                           {
                               Id = score.Id,
-                              UserId = user.Id,
+                              UserId = score.UserId,
                               Points = score.Points,
-                              SubjectId = subject.Id
+                              SubjectId = score.SubjectId
                           }).ToListAsync();
         }
 
         public async Task<IEnumerable<Score>> GetScoresBySubject(int subjectId)
         {
             return await(from score in _dataContext.Scores
-                         join user in _dataContext.Users
-                           on score.UserId equals user.Id
-                         join subject in _dataContext.Subjects
-                         on score.SubjectId equals subject.Id
-                         where subject.Id == subjectId
+                         //join user in _dataContext.Users
+                         //  on score.UserId equals user.Id
+                         //join subject in _dataContext.Subjects
+                         //on score.SubjectId equals subject.Id
+                         where score.SubjectId == subjectId
                          select new Score
                          {
                              Id = score.Id,
-                             UserId = user.Id,
+                             UserId = score.UserId,
                              Points = score.Points,
-                             SubjectId = subject.Id
+                             SubjectId = score.SubjectId
                          }).ToListAsync();
         }
 

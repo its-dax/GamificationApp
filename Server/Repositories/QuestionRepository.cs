@@ -25,7 +25,12 @@ namespace GamificationApp.Server.Repositories
             return question;
         }
 
-      
+        public Task<Question> AddQuestion(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+
         //public async Task<IEnumerable<Question>> GetQuestionsBySubject(int subjectId)
         //{
         //    var questions = await this.dataContext.Questions.Include(q=> q.

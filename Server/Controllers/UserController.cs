@@ -32,7 +32,7 @@ namespace GamificationApp.Server.Controllers
             }
             catch (Exception)
             {
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
             }
         }
     }

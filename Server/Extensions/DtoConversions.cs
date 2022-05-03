@@ -51,9 +51,9 @@ namespace GamificationApp.Server.Extensions
                                                                 IEnumerable<Subject> subjects, 
                                                                 IEnumerable<User> users)
         {
-            return (from score in scores
-                    join subject in subjects
-                        on score.SubjectId equals subject.Id
+            return (from subject in subjects
+                    join score in scores
+                        on subject.Id equals score.SubjectId
                     join user in users
                         on score.UserId equals user.Id
                     select new ScoreDto()
