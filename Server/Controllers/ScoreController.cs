@@ -70,6 +70,7 @@ namespace GamificationApp.Server.Controllers
             }
         }
 
+        [HttpPatch("{id:int}")]
         public async Task<ActionResult<ScoreQtyUpdateDto>> UpdateQty(int id, ScoreQtyUpdateDto scoreQtyUpdateDto)
         {
             try
