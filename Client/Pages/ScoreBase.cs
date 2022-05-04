@@ -16,8 +16,10 @@ namespace GamificationApp.Client.Pages
         public string? ErrorMessage { get; set; } = null;
         public IEnumerable<ScoreDto> Scores { get; set; }
         public IEnumerable<ScoreDto> MyScores { get; set; }
+        public IEnumerable<ScoreDto> SubjectScores { get; set; }
+        public List<List<ScoreDto>> GroupedSubjectScores { get; set; }
         public string? TempError { get; set; } = null;
-        public int StudentId { get; set; }
+        public int UsersId { get; set; }
 
 
         protected override async Task OnInitializedAsync()
@@ -26,11 +28,13 @@ namespace GamificationApp.Client.Pages
 
             try
             {
-                StudentId = Int32.Parse(authState.User.Claims.First().Value);
-                TempError = StudentId.ToString();
+                UsersId = Int32.Parse(authState.User.Claims.First().Value);
+                TempError = UsersId.ToString();
 
                 Scores = await ScoreService.GetScores();
-                MyScores = Scores.Where(x=>x.UserId == StudentId).ToList();
+                MyScores = Scores.Where(x=>x.UserId == UsersId).ToList();
+                SubjectScores = Scores.Where(x => x.SubjectsTeacherId == UsersId).OrderBy(x=> x.SubjectId).ThenByDescending(x => x.Points);
+                GroupedSubjectScores = SubjectScores.GroupBy(u => u.SubjectId).Select(grp => grp.ToList()).ToList();
             }
             catch (Exception ex)
             {

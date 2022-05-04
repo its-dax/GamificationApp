@@ -13,6 +13,7 @@ namespace GamificationApp.Shared.DTOs
         public string UserName { get; set; }
         public int SubjectId { get; set; }
         public string SubjectName { get; set; }
+        public int SubjectsTeacherId { get; set; }
         public int Points { get; set; }
     }
 }
