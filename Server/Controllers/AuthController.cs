@@ -59,9 +59,9 @@ namespace GamificationApp.Server.Controllers
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Code),
+                new Claim("Id", user.Id.ToString()),
             };
-            claims.Add(new Claim("Id", user.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, user.Code));
             if(user.Role == 0)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Student"));

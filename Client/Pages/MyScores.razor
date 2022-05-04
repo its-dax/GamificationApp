@@ -1,29 +1,41 @@
-﻿@page "/MyScores/{Id:int}"
+﻿@page "/MyScores"
 @inherits ScoreBase
 
-@if(Scores is null && ErrorMessage is null)
-{
-    <h4>Kérdés betöltése</h4>
-}
-else if (ErrorMessage is not null)
-{
-    <Displayerror ErrorMessage="@ErrorMessage"></Displayerror>
-}
-else
-{
-    foreach (var score in Scores)
+<AuthorizeView Roles="Student">
+    <Authorized>
+    @if(Scores is null && ErrorMessage is null)
     {
-        <div class="col-auto">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">
-                        <b>Tantárgy: </b>@score.SubjectName
-                    </h5>
-                    <p class="card-text">
-                        <b>Pontszám: </b> @score.Points
-                    </p>
+        <h4>Kérdés betöltése</h4>
+    }
+    @*else if (ErrorMessage is not null)
+    {           <h3>Hiba</h3>
+                <h2>@TempError</h2>
+                <Displayerror ErrorMessage="@ErrorMessage"></Displayerror>
+    }*@
+    else
+    {
+        <h3>Valami gond van.</h3>
+        int Id = Int32.Parse(context.User.Claims.First().Value);
+
+
+        foreach (var score in Scores)
+        {
+            <div class="col-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <b>Tantárgy: </b>@score.SubjectName
+                        </h5>
+                        <p class="card-text">
+                            <b>Pontszám: </b> @score.Points
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    }  
-}
+        }  
+    }
+    </Authorized>
+    <NotAuthorized>
+        <h3>Nincs bejelenetkezve. </h3>
+    </NotAuthorized>
+</AuthorizeView>

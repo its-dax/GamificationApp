@@ -60,8 +60,8 @@ namespace GamificationApp.Server.Extensions
                     {
                         Id = score.Id,
                         UserId = score.UserId,
-                        SubjectId = score.SubjectId,
                         UserName = user.Name,
+                        SubjectId = score.SubjectId,
                         SubjectName = subject.Name,
                         Points = score.Points
                     }).ToList();

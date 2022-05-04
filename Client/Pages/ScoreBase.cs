@@ -2,6 +2,7 @@
 using GamificationApp.Shared.DTOs;
 using GamificationApp.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace GamificationApp.Client.Pages
 {
@@ -10,18 +11,29 @@ namespace GamificationApp.Client.Pages
         [Inject]
         public IScoreService ScoreService { get; set; }
 
-        [Parameter]
-        public int Id { get; set; }
-        public string ErrorMessage { get; set; }
-        public IEnumerable<ScoreDto> Scores { get; set; }
+        [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+        public string? ErrorMessage { get; set; } = null;
+        public List<ScoreDto> Scores { get; set; }
+        public string? TempError { get; set; } = null;
+        public int StudentId { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
+            var authState = await authenticationStateTask;
+
             try
             {
-                Scores = await ScoreService.GetScoreByStudent(Id);
+                StudentId = Int32.Parse(authState.User.Claims.First().Value);
+                TempError = StudentId.ToString();
 
+                Scores = await ScoreService.GetScoresByStudent(StudentId);
+
+                if (Scores.Any())
+                {
+                    TempError = "no scores";
+                }
             }
             catch (Exception ex)
             {
@@ -29,32 +41,31 @@ namespace GamificationApp.Client.Pages
             }
         }
 
-
-        protected async Task UpdateScore(int id, int qty)
-        {
+        //protected async Task UpdateScore(int id, int qty)
+        //{
             
 
-            try
-            {
-                if (qty > 0)
-                {
-                    var updateScoreDto = new ScoreQtyUpdateDto
-                    {
-                        ScoreId = id,
-                        Qty = qty
-                    };
-                    var returnedUpdateScoreDto = await this.ScoreService.UpdatePoints(updateScoreDto);
-                }
-                else
-                {
+        //    try
+        //    {
+        //        if (qty > 0)
+        //        {
+        //            var updateScoreDto = new ScoreQtyUpdateDto
+        //            {
+        //                ScoreId = id,
+        //                Qty = qty
+        //            };
+        //            var returnedUpdateScoreDto = await this.ScoreService.UpdatePoints(updateScoreDto);
+        //        }
+        //        else
+        //        {
                     
-                }
-            }
-            catch (Exception)
-            {
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
     }
 }

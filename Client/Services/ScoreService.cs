@@ -8,26 +8,26 @@ namespace GamificationApp.Client.Services
 {
     public class ScoreService : IScoreService
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient httpClient;
 
         public ScoreService(HttpClient httpClient)
         {
-            _httpClient = httpClient;
+            this.httpClient = httpClient;
         }
-        public async Task<IEnumerable<ScoreDto>> GetScoreByStudent(int userId)
+        public async Task<List<ScoreDto>> GetScoresByStudent(int userId)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/Score/{userId}/GetScoresByStudent");
+                var response = await httpClient.GetAsync($"api/Score/GetScoresByStudent/{userId}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
-                        return Enumerable.Empty<ScoreDto>();
+                        return Enumerable.Empty<ScoreDto>().ToList();
                     }
 
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<ScoreDto>>();
+                    return await response.Content.ReadFromJsonAsync<List<ScoreDto>>();
                 }
                 else
                 {
@@ -41,54 +41,54 @@ namespace GamificationApp.Client.Services
             }
         }
 
-        public async Task<IEnumerable<ScoreDto>> GetScoreBySubject(int subjectId)
-        {
-            try
-            {
-                var response = await _httpClient.GetAsync($"api/{subjectId}/GetScoresBySubject");
+        //public async Task<IEnumerable<ScoreDto>> GetScoresBySubject(int subjectId)
+        //{
+        //    try
+        //    {
+        //        var response = await this.httpClient.GetAsync($"api/Score/{subjectId}/GetScoresBySubject");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
-                    {
-                        return Enumerable.Empty<ScoreDto>();
-                    }
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+        //            {
+        //                return Enumerable.Empty<ScoreDto>();
+        //            }
 
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<ScoreDto>>();
-                }
-                else
-                {
-                    var msg = await response.Content.ReadAsStringAsync();
-                    throw new Exception(msg);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //            return await response.Content.ReadFromJsonAsync<IEnumerable<ScoreDto>>();
+        //        }
+        //        else
+        //        {
+        //            var msg = await response.Content.ReadAsStringAsync();
+        //            throw new Exception(msg);
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
-        public async Task<ScoreDto> UpdatePoints(ScoreQtyUpdateDto scoreQtyUpdateDto)
-        {
-            try
-            {
-                var jsonRequest = JsonConvert.SerializeObject(scoreQtyUpdateDto);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+        //public async Task<ScoreDto> UpdatePoints(ScoreQtyUpdateDto scoreQtyUpdateDto)
+        //{
+        //    try
+        //    {
+        //        var jsonRequest = JsonConvert.SerializeObject(scoreQtyUpdateDto);
+        //        var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
 
-                var response = await _httpClient.PatchAsync($"api/Score/{scoreQtyUpdateDto.ScoreId}", content);
+        //        var response = await this.httpClient.PatchAsync($"api/Score/{scoreQtyUpdateDto.ScoreId}", content);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response.Content.ReadFromJsonAsync<ScoreDto>();
-                }
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            return await response.Content.ReadFromJsonAsync<ScoreDto>();
+        //        }
 
-                return null;
-            }
-            catch (Exception)
-            {
+        //        return null;
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
     }
 }
