@@ -14,6 +14,32 @@ namespace GamificationApp.Client.Services
         {
             this.httpClient = httpClient;
         }
+        public async Task<IEnumerable<ScoreDto>> GetScores()
+        {
+            try
+            {
+                var response = await httpClient.GetAsync($"api/Score/GetScores");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return Enumerable.Empty<ScoreDto>();
+                    }
+
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<ScoreDto>>();
+                }
+                else
+                {
+                    var msg = await response.Content.ReadAsStringAsync();
+                    throw new Exception(msg);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public async Task<List<ScoreDto>> GetScoresByStudent(int userId)
         {
             try

@@ -20,11 +20,11 @@ namespace GamificationApp.Server.Repositories
             throw new NotImplementedException();
         }
 
-        //public async Task<IEnumerable<Score>> GetScores()
-        //{
-        //    var scores = await _dataContext.Scores.ToListAsync();
-        //    return scores;
-        //}
+        public async Task<IEnumerable<Score>> GetScores()
+        {
+            var scores = await _dataContext.Scores.ToListAsync();
+            return scores;
+        }
 
         public async Task<IEnumerable<Score>> GetScoresByStudent(int userId)
         {

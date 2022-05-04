@@ -1,4 +1,4 @@
-﻿@page "/MyScores"
+﻿@page "/GetScores"
 @inherits ScoreBase
 
 <AuthorizeView Roles="Student">
@@ -14,11 +14,11 @@
     }*@
     else
     {
-        <h3>Valami gond van.</h3>
+
         int Id = Int32.Parse(context.User.Claims.First().Value);
 
 
-        foreach (var score in Scores)
+        foreach (var score in MyScores)
         {
             <div class="col-auto">
                 <div class="card">

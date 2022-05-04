@@ -14,7 +14,8 @@ namespace GamificationApp.Client.Pages
         [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
 
         public string? ErrorMessage { get; set; } = null;
-        public List<ScoreDto> Scores { get; set; }
+        public IEnumerable<ScoreDto> Scores { get; set; }
+        public IEnumerable<ScoreDto> MyScores { get; set; }
         public string? TempError { get; set; } = null;
         public int StudentId { get; set; }
 
@@ -28,12 +29,8 @@ namespace GamificationApp.Client.Pages
                 StudentId = Int32.Parse(authState.User.Claims.First().Value);
                 TempError = StudentId.ToString();
 
-                Scores = await ScoreService.GetScoresByStudent(StudentId);
-
-                if (Scores.Any())
-                {
-                    TempError = "no scores";
-                }
+                Scores = await ScoreService.GetScores();
+                MyScores = Scores.Where(x=>x.UserId == StudentId).ToList();
             }
             catch (Exception ex)
             {

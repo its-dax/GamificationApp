@@ -23,6 +23,30 @@ namespace GamificationApp.Server.Controllers
         }
 
         [HttpGet]
+        [Route("GetScores")]
+        public async Task<ActionResult<IEnumerable<ScoreDto>>> GetScores()
+        {
+            try
+            {
+                var scores = await this.scoreRepository.GetScores();
+                if (scores == null)
+                {
+                    return NoContent();
+                }
+                var subjects = await this.subjectRepository.GetSubjects();
+                var users = await this.userRepository.GetUsers();
+
+                var scoresDto = scores.ConvertToDto(subjects, users);
+
+                return Ok(scoresDto);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
+            }
+        }
+
+        [HttpGet]
         [Route("GetScoresByUser/{userId}")]
         public async Task<ActionResult<IEnumerable<ScoreDto>>> GetScoresByUser(int userId)
         {
