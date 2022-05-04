@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace GamificationApp.Server.Repositories
 {
     public class ScoreRepository : IScoreRepository
-
     {
         private readonly DataContext _dataContext;
 

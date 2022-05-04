@@ -22,9 +22,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
-
 builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
-
 builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
 builder.Services.AddScoped<ITestRepository, TestRepository>();
 
@@ -32,7 +30,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options=> options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Token").Value)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            builder.Configuration.GetSection("Jwt:Token").Value)),
         ValidateIssuer = false,
         ValidateAudience = false
     });
@@ -51,7 +50,12 @@ else
     app.UseHsts();
 }
 
-app.UseCors(policy => policy.WithOrigins("http://localhost:47630", "https://localhost:47630", "http://localhost:5216", "https://localhost:5216", "http://localhost:7216", "https://localhost:7216")
+app.UseCors(policy => policy.WithOrigins("http://localhost:47630", 
+                                        "https://localhost:47630", 
+                                        "http://localhost:5216", 
+                                        "https://localhost:5216", 
+                                        "http://localhost:7216", 
+                                        "https://localhost:7216")
     .AllowAnyMethod()
     .WithHeaders(HeaderNames.ContentType));
 

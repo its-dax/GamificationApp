@@ -24,7 +24,8 @@ namespace GamificationApp.Server.Extensions
                         D = question.D,
                         GoodAnswer = question.GoodAnswer,
                         IsApproved = question.IsApproved,
-                        SubjectName = subject.Name
+                        SubjectName = subject.Name,
+                        SubjectTeacher = subject.UserId
                     }).ToList();
         }
         public static QuestionDto ConvertToDto(this Question question,

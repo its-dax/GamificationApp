@@ -15,7 +15,9 @@ namespace GamificationApp.Server.Controllers
         private readonly IUserRepository userRepository;
         private readonly ISubjectRepository subjectRepository;
 
-        public ScoreController(IScoreRepository ScoreRepository, IUserRepository userRepository, ISubjectRepository subjectRepository)
+        public ScoreController(IScoreRepository ScoreRepository, 
+                                IUserRepository userRepository,
+                                ISubjectRepository subjectRepository)
         {
             this.scoreRepository = ScoreRepository;
             this.userRepository = userRepository;

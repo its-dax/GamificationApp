@@ -33,8 +33,12 @@ namespace GamificationApp.Client.Pages
 
                 Scores = await ScoreService.GetScores();
                 MyScores = Scores.Where(x=>x.UserId == UsersId).ToList();
-                SubjectScores = Scores.Where(x => x.SubjectsTeacherId == UsersId).OrderBy(x=> x.SubjectId).ThenByDescending(x => x.Points);
-                GroupedSubjectScores = SubjectScores.GroupBy(u => u.SubjectId).Select(grp => grp.ToList()).ToList();
+
+                SubjectScores = Scores.Where(x => x.SubjectsTeacherId == UsersId)
+                    .OrderBy(x=> x.SubjectId).ThenByDescending(x => x.Points);
+
+                GroupedSubjectScores = SubjectScores.GroupBy(u => u.SubjectId)
+                    .Select(grp => grp.ToList()).ToList();
             }
             catch (Exception ex)
             {

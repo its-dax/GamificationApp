@@ -1,22 +1,20 @@
 ﻿@page "/Question"
 @inherits QuestionsBase
 
-<h3>Questions</h3>
 
 @if (Questions is null)
 {
-    <h3>Loading questions...</h3>
+    <h3>Kérdések betöltése...</h3>
 }
 else
 {
-    var questions = Questions ;
-    var approvedQuestions = questions.Where(q => q.IsApproved);
-    var notApprovedQuestions = questions.Where(q => (q.IsApproved == false));
+    var approvedQuestions = Questions.Where(q => q.IsApproved);
+    var notApprovedQuestions = MyQuestions.Where(q => (q.IsApproved == false));
     
                 
-    <AuthorizeView Roles="Teacher">
+    <AuthorizeView Roles="Student">
         <Authorized>
-            <h2>Approved questions</h2>
+            <h2>Kérdések</h2>
             @if (approvedQuestions.Any())
             {
                 foreach (var approvedQuestionDto in approvedQuestions)
@@ -46,12 +44,9 @@ else
             }
         </Authorized>
     </AuthorizeView>
-    <AuthorizeView Roles="Student">
+    <AuthorizeView Roles="Teacher">
         <Authorized>
-            <h1> Hey </h1>
-        </Authorized>
-        <NotAuthorized>
-            <h2>Unapproved questions</h2>
+            <h2>Elfogadásra váró kérdések</h2>
 
             @if (notApprovedQuestions.Any())
             {
@@ -64,22 +59,42 @@ else
                                     @notApprovedQuestionDto.Title
                                 </h5>
                                 <p class="card-text">
-                                    <b>A)</b> @notApprovedQuestionDto.A
+                                    <b>A) </b> @notApprovedQuestionDto.A
                                 </p>
                                 <p class="card-text">
-                                    <b>B)</b> @notApprovedQuestionDto.B
+                                    <b>B) </b> @notApprovedQuestionDto.B
                                 </p>
                                 <p class="card-text">
-                                    <b>C)</b> @notApprovedQuestionDto.C
+                                    <b>C) </b> @notApprovedQuestionDto.C
                                 </p>
                                 <p class="card-text">
-                                    <b>D)</b> @notApprovedQuestionDto.D
+                                    <b>D) </b> @notApprovedQuestionDto.D
+                                </p>
+                                <p class="card-text">
+                                    <b>Helyes válasz: </b> @notApprovedQuestionDto.GoodAnswer
                                 </p>
                             </div>
                         </div>
+                        <div class="card-footer"> 
+                            <button @onclick="Approve" class="btn btn-primary">Elfogadás</button>
+                        </div>
                     </div>
+                    <br/>
+                    <br/>
                 }
             }
+        </Authorized>
+    </AuthorizeView>
+    <AuthorizeView>
+        <NotAuthorized>
+            <h1> Hey </h1>
         </NotAuthorized>
     </AuthorizeView>
+}
+
+@code{
+    public void Approve()
+    {
+        
+    }
 }

@@ -19,7 +19,8 @@ namespace GamificationApp.Server.Controllers
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
 
-        public AuthController(IConfiguration configuration, IUserRepository userRepository)
+        public AuthController(IConfiguration configuration, 
+                            IUserRepository userRepository)
         {
             _configuration = configuration;
             _userRepository = userRepository;
@@ -73,9 +74,12 @@ namespace GamificationApp.Server.Controllers
             }
             
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Token").Value));
+            var key = new SymmetricSecurityKey(
+                                    System.Text.Encoding.UTF8.GetBytes(
+                                        _configuration.GetSection("Jwt:Token").Value));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            var creds = new SigningCredentials(key, 
+                                    SecurityAlgorithms.HmacSha256Signature);
 
             var token = new JwtSecurityToken(
                 claims: claims,
