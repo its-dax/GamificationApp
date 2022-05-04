@@ -40,60 +40,7 @@ namespace GamificationApp.Client.Services
                 throw;
             }
         }
-        public async Task<List<ScoreDto>> GetScoresByStudent(int userId)
-        {
-            try
-            {
-                var response = await httpClient.GetAsync($"api/Score/GetScoresByStudent/{userId}");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
-                    {
-                        return Enumerable.Empty<ScoreDto>().ToList();
-                    }
-
-                    return await response.Content.ReadFromJsonAsync<List<ScoreDto>>();
-                }
-                else
-                {
-                    var msg = await response.Content.ReadAsStringAsync();
-                    throw new Exception(msg);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        //public async Task<IEnumerable<ScoreDto>> GetScoresBySubject(int subjectId)
-        //{
-        //    try
-        //    {
-        //        var response = await this.httpClient.GetAsync($"api/Score/{subjectId}/GetScoresBySubject");
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
-        //            {
-        //                return Enumerable.Empty<ScoreDto>();
-        //            }
-
-        //            return await response.Content.ReadFromJsonAsync<IEnumerable<ScoreDto>>();
-        //        }
-        //        else
-        //        {
-        //            var msg = await response.Content.ReadAsStringAsync();
-        //            throw new Exception(msg);
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-
+       
         //public async Task<ScoreDto> UpdatePoints(ScoreQtyUpdateDto scoreQtyUpdateDto)
         //{
         //    try

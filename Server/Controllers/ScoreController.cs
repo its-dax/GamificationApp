@@ -46,54 +46,6 @@ namespace GamificationApp.Server.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetScoresByUser/{userId}")]
-        public async Task<ActionResult<IEnumerable<ScoreDto>>> GetScoresByUser(int userId)
-        {
-            try
-            {
-                var scores = await this.scoreRepository.GetScoresByStudent(userId);
-                if (scores == null)
-                {
-                    return NoContent();
-                }
-                var subjects = await this.subjectRepository.GetSubjects();
-                var users = await this.userRepository.GetUsers();
-
-                var scoresDto = scores.ConvertToDto(subjects, users);
-
-                return Ok(scoresDto);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
-            }
-        }
-
-        [HttpGet]
-        [Route("{subjectId}/GetScoresBySubject")]
-        public async Task<ActionResult<IEnumerable<ScoreDto>>> GetScoresBySubject(int subjectId)
-        {
-            try
-            {
-                var scores = await this.scoreRepository.GetScoresBySubject(subjectId);
-                if (scores == null)
-                {
-                    return NoContent();
-                }
-                var subjects = await this.subjectRepository.GetSubjects();
-                var users = await this.userRepository.GetUsers();
-
-                var scoresDto = scores.ConvertToDto(subjects, users);
-
-                return Ok(scoresDto);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
-            }
-        }
-
         [HttpPatch("{id:int}")]
         public async Task<ActionResult<ScoreQtyUpdateDto>> UpdateQty(int id, ScoreQtyUpdateDto scoreQtyUpdateDto)
         {
