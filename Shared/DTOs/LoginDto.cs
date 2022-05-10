@@ -10,7 +10,9 @@ namespace GamificationApp.Shared.DTOs
 {
     public class LoginDto
     {
+        [Required]
         public string Code { get; set; } = string.Empty;
+        [Required]
         public string Password { get; set; } = string.Empty;
         public User.Roles Role { get; set; }
     }

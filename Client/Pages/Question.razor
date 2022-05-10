@@ -1,5 +1,7 @@
 ﻿@page "/Question"
 @inherits QuestionsBase
+@inject IQuestionService qService
+@inject NavigationManager NavMgr
 
 
 @if (Questions is null)
@@ -10,38 +12,54 @@ else
 {
     var approvedQuestions = Questions.Where(q => q.IsApproved);
     var notApprovedQuestions = MyQuestions.Where(q => (q.IsApproved == false));
-    
-                
+
+ <CascadingAuthenticationState>              
     <AuthorizeView Roles="Student">
         <Authorized>
-            <h2>Kérdések</h2>
-            @if (approvedQuestions.Any())
-            {
-                foreach (var approvedQuestionDto in approvedQuestions)
-                {
-                    <div class="col-auto">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title mb-3">
-                                    @approvedQuestionDto.Title
-                                </h5>
-                                <p class="card-text">
-                                    <b>A)</b> @approvedQuestionDto.A
-                                </p>
-                                <p class="card-text">
-                                    <b>B)</b> @approvedQuestionDto.B
-                                </p>
-                                <p class="card-text">
-                                    <b>C)</b> @approvedQuestionDto.C
-                                </p>
-                                <p class="card-text">
-                                    <b>D)</b> @approvedQuestionDto.D
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
+            <h2>Kérdés beküldése</h2>
+            <EditForm Model="addQuestion" OnValidSubmit="SubmitQuestion" Context="AddQuestion">
+                <DataAnnotationsValidator />
+                <div class="col-form-label-lg"> 
+                    <label for="title">Kérdés szövege</label>
+                    <InputText id="title" @bind-Value="addQuestion.Title" class="form-control"/>
+                    <ValidationMessage For="@(() => addQuestion.Title)"> </ValidationMessage>
+                </div>
+                <div class="col-form-label-lg"> 
+                    <label for="a">A</label>
+                    <InputText id="a" @bind-Value="addQuestion.A" class="form-control"/>
+                    <ValidationMessage For="@(() => addQuestion.A)"> </ValidationMessage>
+                </div>
+                <div class="col-form-label-lg"> 
+                    <label for="b">B</label>
+                    <InputText id="b" @bind-Value="addQuestion.B" class="form-control"/>
+                    <ValidationMessage For="@(() => addQuestion.B)"> </ValidationMessage>
+                </div>
+                <div class="col-form-label-lg"> 
+                    <label for="c">C</label>
+                    <InputText id="c" @bind-Value="addQuestion.C" class="form-control"/>
+                    <ValidationMessage For="@(() => addQuestion.C)"> </ValidationMessage>
+                </div>
+                <div class="col-form-label-lg"> 
+                    <label for="d">D</label>
+                    <InputText id="d" @bind-Value="addQuestion.D" class="form-control"/>
+                    <ValidationMessage For="@(() => addQuestion.D)"> </ValidationMessage>
+                </div>
+                <div class="col-form-label-lg"> 
+                    <label for="good">Helyes válasz</label>
+                    <InputText id="good" @bind-Value="addQuestion.GoodAnswer" class="form-control"/>
+                    <ValidationMessage For="@(() => addQuestion.GoodAnswer)"> </ValidationMessage>
+                </div>
+                <div class="col-form-label-lg"> 
+                    <label for="subj">Tantárgy</label>
+                    <InputSelect id="subj" @bind-Value="addQuestion.SubjectName" class="form-control">
+                        @foreach(var sub in Subjects)
+                        {
+                            <option value ="@sub.Name">@sub.Name</option>
+                        }
+                    </InputSelect>
+                </div>
+                <button type="submit" class="btn btn-primary">Küldés</button>
+            </EditForm>
         </Authorized>
     </AuthorizeView>
     <AuthorizeView Roles="Teacher">
@@ -87,12 +105,21 @@ else
     </AuthorizeView>
     <AuthorizeView>
         <NotAuthorized>
-            <h1> Hey </h1>
+            <h1> Bejelentkezés szükséges </h1>
         </NotAuthorized>
     </AuthorizeView>
+</CascadingAuthenticationState>
 }
 
 @code{
+    
+
+    async Task SubmitQuestion()
+    {
+        await qService.AddQuestion(addQuestion);
+        NavMgr.NavigateTo("/");
+    }  
+
     public void Approve()
     {
         

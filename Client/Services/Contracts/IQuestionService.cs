@@ -1,4 +1,5 @@
 ﻿using GamificationApp.Shared.DTOs;
+using GamificationApp.Shared.Models;
 
 namespace GamificationApp.Client.Services.Contracts
 {
@@ -6,5 +7,7 @@ namespace GamificationApp.Client.Services.Contracts
     {
         Task<IEnumerable<QuestionDto>> GetQuestions();
         Task<QuestionDto> GetQuestion(int id);
+        Task<Question> AddQuestion(QuestionDto questionDto);
+        Task<IEnumerable<Subject>> GetSubjects();
     }
 }

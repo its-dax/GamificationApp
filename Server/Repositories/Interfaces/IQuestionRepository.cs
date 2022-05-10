@@ -1,4 +1,5 @@
-﻿using GamificationApp.Shared.Models;
+﻿using GamificationApp.Shared.DTOs;
+using GamificationApp.Shared.Models;
 
 namespace GamificationApp.Server.Repositories.Interfaces
 {
@@ -6,6 +7,6 @@ namespace GamificationApp.Server.Repositories.Interfaces
     {
         Task<IEnumerable<Question>> GetQuestions();
         Task<Question> GetQuestion(int id);
-        Task<Question> AddQuestion(int id);
+        Task<Question> AddQuestion(Question question);
     }
 }

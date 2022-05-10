@@ -1,6 +1,7 @@
 ﻿using GamificationApp.Server.Extensions;
 using GamificationApp.Server.Repositories.Interfaces;
 using GamificationApp.Shared.DTOs;
+using GamificationApp.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -52,7 +53,7 @@ namespace GamificationApp.Server.Controllers
             {
                 var question = await this.questionRepository.GetQuestion(id);
 
-                if (question is null )
+                if (question is null)
                 {
                     return BadRequest();
                 }
@@ -68,6 +69,21 @@ namespace GamificationApp.Server.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Hiba az adatok kinyerésében.");
             }
+        }
+        [HttpPost]
+        public async Task<ActionResult<Question>> PostQuestion([FromBody] QuestionDto questionDto)
+        {
+            var subjects = await this.subjectRepository.GetSubjects();
+
+            var question = questionDto.ConvertFromDto(subjects);
+            if (question is null)
+            {
+                return BadRequest();
+            }
+
+            var result = await this.questionRepository.AddQuestion(question);
+
+            return Ok(result);
         }
     }
 }

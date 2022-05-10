@@ -1,10 +1,12 @@
-﻿using GamificationApp.Shared.DTOs;
+﻿using GamificationApp.Server.Data;
+using GamificationApp.Shared.DTOs;
 using GamificationApp.Shared.Models;
 
 namespace GamificationApp.Server.Extensions
 {
     public static class DtoConversions
     {
+        
         //Question DTO conversions
 
         public static IEnumerable<QuestionDto> ConvertToDto(this IEnumerable<Question> questions,
@@ -99,5 +101,24 @@ namespace GamificationApp.Server.Extensions
                         TestTimeInMinutes = test.TestTimeInMinutes
                     }).ToList();
         }
+        public static Question ConvertFromDto(this QuestionDto dto, IEnumerable<Subject> subjects)
+        {
+            return new Question
+            {
+                Title = dto.Title,
+                A = dto.A,
+                B = dto.B,
+                C = dto.C,
+                D = dto.D,
+                GoodAnswer = dto.GoodAnswer,
+                IsApproved = false,
+                UserId = dto.UserId,
+                SubjectId = (from subject in subjects
+                             where subject.Name == dto.SubjectName
+                             select subject.Id).SingleOrDefault()
+            };
+        }
     }
+
+    
 }

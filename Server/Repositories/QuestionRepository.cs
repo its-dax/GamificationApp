@@ -1,5 +1,6 @@
 ﻿using GamificationApp.Server.Data;
 using GamificationApp.Server.Repositories.Interfaces;
+using GamificationApp.Shared.DTOs;
 using GamificationApp.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,9 +26,12 @@ namespace GamificationApp.Server.Repositories
             return question;
         }
 
-        public Task<Question> AddQuestion(int id)
+        public async Task<Question> AddQuestion(Question question)
         {
-            throw new NotImplementedException();
+            var result = await this.dataContext.Questions.AddAsync(question);
+            await this.dataContext.SaveChangesAsync();
+
+            return result.Entity;
         }
 
 
