@@ -10,7 +10,11 @@ namespace GamificationApp.Client.Pages
     {
         [Inject]
         public IQuestionService QuestionService { get; set; }
-        public int UsersId { get; set; }
+        [Inject]
+        public AuthenticationStateProvider AuthStateProvider { get; set; }
+        [Inject]
+        public NavigationManager NavMgr { get; set; }
+        public static int UsersId { get; set; }
         public string? ErrorMessage { get; set; } = null;
 
 
@@ -20,7 +24,9 @@ namespace GamificationApp.Client.Pages
         public IEnumerable<QuestionDto> MyQuestions { get; set; }
         public IEnumerable<Subject> Subjects { get; set; }
 
-        QuestionDto addQuestion = new QuestionDto();
+        //QuestionDto addQuestion = new QuestionDto();
+
+        
         protected override async Task OnInitializedAsync()
         {
             var authState = await authenticationStateTask;
@@ -28,12 +34,6 @@ namespace GamificationApp.Client.Pages
             try
             {
                 UsersId = Int32.Parse(authState.User.Claims.First().Value);
-                QuestionDto addQuestion = new QuestionDto()
-                {
-                    UserId = Int32.Parse(authState.User.Claims.First().Value)
-                };
-
-                addQuestion.UserId = UsersId;
                 Questions = await QuestionService.GetQuestions();
                 Subjects = await QuestionService.GetSubjects();
                 MyQuestions = Questions.Where(q => q.SubjectTeacher == UsersId);
@@ -42,6 +42,7 @@ namespace GamificationApp.Client.Pages
             {
                 ErrorMessage = ex.Message;
             }
+
         }
     }
 }

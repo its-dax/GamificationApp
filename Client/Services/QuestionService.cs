@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using GamificationApp.Client.Pages;
 using GamificationApp.Client.Services.Contracts;
 using GamificationApp.Shared.DTOs;
 using GamificationApp.Shared.Models;
@@ -14,7 +15,7 @@ namespace GamificationApp.Client.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<Question> AddQuestion(QuestionDto questionDto)
+        public async Task<GamificationApp.Shared.Models.Question> AddQuestion(QuestionDto questionDto)
         {
             var response = await httpClient.PostAsJsonAsync<QuestionDto>("api/question", questionDto);
             return null;

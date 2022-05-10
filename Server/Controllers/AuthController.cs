@@ -15,7 +15,6 @@ namespace GamificationApp.Server.Controllers
     {
        
 
-        public static User user = new User();
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
 

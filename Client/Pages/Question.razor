@@ -10,6 +10,7 @@
 }
 else
 {
+    OnInitializedAsync();
     var approvedQuestions = Questions.Where(q => q.IsApproved);
     var notApprovedQuestions = MyQuestions.Where(q => (q.IsApproved == false));
 
@@ -112,10 +113,11 @@ else
 }
 
 @code{
-    
+    QuestionDto addQuestion = new QuestionDto();
 
     async Task SubmitQuestion()
     {
+        addQuestion.UserId = UsersId;
         await qService.AddQuestion(addQuestion);
         NavMgr.NavigateTo("/");
     }  
