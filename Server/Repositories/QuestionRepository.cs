@@ -33,11 +33,30 @@ namespace GamificationApp.Server.Repositories
 
             return result.Entity;
         }
+        
+        public async Task<Question> ApproveQuestion(int id)
+        {
+            var item = await this.dataContext.Questions.FindAsync(id);
+            if (item is not null)
+            {
+                item.IsApproved = true;
+                await this.dataContext.SaveChangesAsync();
+                return item;
+            }
+            return null;
+        }
 
-
-        //public async Task<IEnumerable<Question>> GetQuestionsBySubject(int subjectId)
-        //{
-        //    var questions = await this.dataContext.Questions.Include(q=> q.
-        //}
+        public async Task<Question> DeleteQuestion(int id)
+        {
+            var item = await this.dataContext.Questions.FindAsync(id);
+            if (item != null)
+            {
+                this.dataContext.Questions.Remove(item);
+                await this.dataContext.SaveChangesAsync();
+                dataContext.SaveChanges();
+                return item;
+            }
+            return null;
+        }
     }
 }

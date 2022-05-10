@@ -9,5 +9,7 @@ namespace GamificationApp.Client.Services.Contracts
         Task<QuestionDto> GetQuestion(int id);
         Task<Question> AddQuestion(QuestionDto questionDto);
         Task<IEnumerable<Subject>> GetSubjects();
+        Task<QuestionDto> ApproveQuestion(ApproveQuestionDto dto);
+        Task<QuestionDto> DeleteQuestion(ApproveQuestionDto delete);
     }
 }

@@ -69,40 +69,44 @@ else
 
             @if (notApprovedQuestions.Any())
             {
-                foreach (var notApprovedQuestionDto in notApprovedQuestions)
-                {
-                    <div class="col-auto">
+                    var toApprove = notApprovedQuestions.Last();
+
+                        approveQ.QuestionId = toApprove.Id;
+                        approveQ.SubjectId = toApprove.SubjectId;
+                        <div class="col-auto">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title mb-3">
-                                    @notApprovedQuestionDto.Title
+                                    @toApprove.Title
                                 </h5>
                                 <p class="card-text">
-                                    <b>A) </b> @notApprovedQuestionDto.A
+                                    <b>A) </b> @toApprove.A
                                 </p>
                                 <p class="card-text">
-                                    <b>B) </b> @notApprovedQuestionDto.B
+                                    <b>B) </b> @toApprove.B
                                 </p>
                                 <p class="card-text">
-                                    <b>C) </b> @notApprovedQuestionDto.C
+                                    <b>C) </b> @toApprove.C
                                 </p>
                                 <p class="card-text">
-                                    <b>D) </b> @notApprovedQuestionDto.D
+                                    <b>D) </b> @toApprove.D
                                 </p>
                                 <p class="card-text">
-                                    <b>Helyes válasz: </b> @notApprovedQuestionDto.GoodAnswer
+                                    <b>Helyes válasz: </b> @toApprove.GoodAnswer
                                 </p>
                             </div>
                         </div>
                         <div class="card-footer"> 
                             <button @onclick="Approve" class="btn btn-primary">Elfogadás</button>
+                            <button @onclick="Delete" class="btn btn-danger">Elutasítás</button>
                         </div>
                     </div>
-                    <br/>
-                    <br/>
                 }
-            }
-        </Authorized>
+                else
+                {
+                    <h4>Nincsenek elfogadásra váró kérdések.</h4>
+                }
+            </Authorized>
     </AuthorizeView>
     <AuthorizeView>
         <NotAuthorized>
@@ -114,6 +118,7 @@ else
 
 @code{
     QuestionDto addQuestion = new QuestionDto();
+    ApproveQuestionDto approveQ = new ApproveQuestionDto();
 
     async Task SubmitQuestion()
     {
@@ -122,8 +127,15 @@ else
         NavMgr.NavigateTo("/");
     }  
 
-    public void Approve()
+    public async void Approve()
     {
-        
+        await qService.ApproveQuestion(approveQ);
+        NavMgr.NavigateTo("/Question", true);
+    }
+
+    public async void Delete()
+    {
+        await qService.DeleteQuestion(approveQ);
+        NavMgr.NavigateTo("/Question", true);
     }
 }

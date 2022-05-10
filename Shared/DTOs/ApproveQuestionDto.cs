@@ -10,5 +10,6 @@ namespace GamificationApp.Shared.DTOs
     {
         public int QuestionId { get; set; }
         public bool IsApproved { get; set; }
+        public int SubjectId { get; set; }
     }
 }

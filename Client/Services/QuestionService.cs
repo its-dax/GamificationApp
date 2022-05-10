@@ -1,8 +1,10 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using GamificationApp.Client.Pages;
 using GamificationApp.Client.Services.Contracts;
 using GamificationApp.Shared.DTOs;
 using GamificationApp.Shared.Models;
+using Newtonsoft.Json;
 
 namespace GamificationApp.Client.Services
 {
@@ -100,6 +102,29 @@ namespace GamificationApp.Client.Services
             {
                 throw;
             }
+        }
+
+        public async Task<QuestionDto> ApproveQuestion(ApproveQuestionDto qst)
+        {
+            var jsonRequest = JsonConvert.SerializeObject(qst);
+            var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+
+            var response = await httpClient.PatchAsync($"Api/Question/{qst.QuestionId}", content);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<QuestionDto>();
+            }
+            return null;
+        }
+
+        public async Task<QuestionDto> DeleteQuestion(ApproveQuestionDto delete)
+        {
+            var response = await httpClient.DeleteAsync($"Api/Question/{delete.QuestionId}");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<QuestionDto>();
+            }
+            return null;
         }
     }
 }

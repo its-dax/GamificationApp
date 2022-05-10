@@ -85,5 +85,44 @@ namespace GamificationApp.Server.Controllers
 
             return Ok(result);
         }
+        
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult<Question>> PatchQuestion(ApproveQuestionDto approve)
+        {
+            try
+            {
+                var question = await this.questionRepository.ApproveQuestion(approve.QuestionId);
+                if (question == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(question);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<Question>> DeleteQuestion(ApproveQuestionDto delete)
+        {
+            try
+            {
+                var deleteItem = await this.questionRepository.DeleteQuestion(delete.QuestionId);
+
+                if (deleteItem is null)
+                {
+                    return NotFound();
+                }
+                return Ok(deleteItem);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }
