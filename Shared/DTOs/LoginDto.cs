@@ -10,9 +10,9 @@ namespace GamificationApp.Shared.DTOs
 {
     public class LoginDto
     {
-        [Required]
+        [Required(ErrorMessage = "A mező kitöltése kötelező!")]
         public string Code { get; set; } = string.Empty;
-        [Required]
+        [Required(ErrorMessage = "A mező kitöltése kötelező!")]
         public string Password { get; set; } = string.Empty;
         public User.Roles Role { get; set; }
     }

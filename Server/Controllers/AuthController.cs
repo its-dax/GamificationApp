@@ -37,7 +37,7 @@ namespace GamificationApp.Server.Controllers
                     return NotFound();
                 }
 
-                var currentUser = users.First(u => u.Code == request.Code && u.Password == request.Password);
+                var currentUser = users.FirstOrDefault(u => u.Code == request.Code && u.Password == request.Password);
 
                 if (currentUser is null)
                 {

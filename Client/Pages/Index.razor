@@ -2,8 +2,23 @@
 
 <AuthorizeView>
         <Authorized>
-           <div>Ön be van jelentkezve.</div>
+           <div>Köszöntjük, <b>@context.User.Identity.Name</b>!</div>
+           <br />
         </Authorized>
+</AuthorizeView>
+<AuthorizeView Roles="Student">
+    <Authorized>
+        <div>
+            <p>Ez az applikáció a tanórákhoz történi pluszpont, esetleges megajánlott jegyek szerzésére szolgál<br />
+                Minden elfogadott kérdés után az adott tantágyban 1 pluszpont jár<br />
+                A szorgalmi időszak végén a tantárgy első három helyezettje megajánlott jegyet kap.</p>
+            <p>Első helyezett:     Megajánlott <b>Jeles</b><br />
+                Második helyezett:  Megajánlott <b>Jó</b><br />
+                Harmadik helyezett: Megajánlott <b>Jó</b></p>
+        </div>
+    </Authorized>
+</AuthorizeView>
+<AuthorizeView>
         <NotAuthorized>
            <div>Az alkalmazás használatához jelentkezzen be.</div>
         </NotAuthorized>

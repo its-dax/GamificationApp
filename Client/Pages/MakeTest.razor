@@ -19,7 +19,7 @@ else
                 <div class="col-form-label-lg"> 
                         <label for="subj">Tantárgy</label>
                         <InputSelect id="subj" @bind-Value="addTest.SubjectName" class="form-control">
-                            @foreach(var sub in Subjects)
+                            @foreach(var sub in MySubjects)
                             {
                                 <option value ="@sub.Name">@sub.Name</option>
                             }
@@ -39,15 +39,6 @@ else
                     <label for="Start">Teszt kezdete</label>
                     <InputDate id="Start" @bind-Value="addTest.StartTime" class="form-control"/>
                     <ValidationMessage For="@(() => addTest.StartTime)"> </ValidationMessage>
-                </div>
-                <div class="col-form-label-lg"> 
-                        <label for="subj">Tantárgy</label>
-                        <InputSelect id="subj" @bind-Value="addTest.SubjectName" class="form-control">
-                            @foreach(var sub in MySubjects)
-                            {
-                                <option value ="@sub.Name">@sub.Name</option>
-                            }
-                        </InputSelect>
                 </div>
                 <button type="submit" class="btn btn-primary">Küldés</button>
             </EditForm>

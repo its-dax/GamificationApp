@@ -18,6 +18,7 @@ else
     <AuthorizeView Roles="Student">
         <Authorized>
             <h2>Kérdés beküldése</h2>
+            <hr/>
             <EditForm Model="addQuestion" OnValidSubmit="SubmitQuestion" Context="AddQuestion">
                 <DataAnnotationsValidator />
                 <div class="col-form-label-lg"> 
@@ -124,7 +125,7 @@ else
     {
         addQuestion.UserId = UsersId;
         await qService.AddQuestion(addQuestion);
-        NavMgr.NavigateTo("/");
+        NavMgr.NavigateTo("/question");
     }  
 
     public async Task Approve()
