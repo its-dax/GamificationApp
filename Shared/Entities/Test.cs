@@ -10,10 +10,14 @@ namespace GamificationApp.Shared.Models
 {
     public class Test
     {
+        [Key]
         public int Id { get; set; }
-        public int SubjectId { get; set; }
+
         public int NumberOfQuestions { get; set; }
         public DateTime StartTime { get; set; }
         public int TestTimeInMinutes { get; set; }
+
+        [ForeignKey("Subject")]
+        public int SubjectId { get; set; }
     }
 }

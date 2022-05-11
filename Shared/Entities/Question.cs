@@ -10,8 +10,11 @@ namespace GamificationApp.Shared.Models
 {
     public class Question
     {
+        [Key]
         public int Id { get; set; }
+        [ForeignKey("User")]
         public int UserId { get; set; }
+        [ForeignKey("Subject")]
         public int SubjectId { get; set; }
         public string Title { get; set; }
         public string A { get; set; }

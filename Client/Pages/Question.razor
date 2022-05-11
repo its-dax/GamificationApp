@@ -10,7 +10,6 @@
 }
 else
 {
-    OnInitializedAsync();
     var approvedQuestions = Questions.Where(q => q.IsApproved);
     var notApprovedQuestions = MyQuestions.Where(q => (q.IsApproved == false));
 
@@ -72,28 +71,30 @@ else
             {
                     var toApprove = notApprovedQuestions.Last();
 
+                        deleteQ.QuestionId = toApprove.Id;
                         approveQ.QuestionId = toApprove.Id;
+                        deleteQ.SubjectId = toApprove.SubjectId;
                         approveQ.SubjectId = toApprove.SubjectId;
                         <div class="col-auto">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title mb-3">
-                                    @toApprove.Title
+                                    @notApprovedQuestions.Last().Title
                                 </h5>
                                 <p class="card-text">
-                                    <b>A) </b> @toApprove.A
+                                    <b>A) </b> @notApprovedQuestions.Last().A
                                 </p>
                                 <p class="card-text">
-                                    <b>B) </b> @toApprove.B
+                                    <b>B) </b> @notApprovedQuestions.Last().B
                                 </p>
                                 <p class="card-text">
-                                    <b>C) </b> @toApprove.C
+                                    <b>C) </b> @notApprovedQuestions.Last().C
                                 </p>
                                 <p class="card-text">
-                                    <b>D) </b> @toApprove.D
+                                    <b>D) </b> @notApprovedQuestions.Last().D
                                 </p>
                                 <p class="card-text">
-                                    <b>Helyes válasz: </b> @toApprove.GoodAnswer
+                                    <b>Helyes válasz: </b> @notApprovedQuestions.Last().GoodAnswer
                                 </p>
                             </div>
                         </div>
@@ -120,6 +121,7 @@ else
 @code{
     QuestionDto addQuestion = new QuestionDto();
     ApproveQuestionDto approveQ = new ApproveQuestionDto();
+    ApproveQuestionDto deleteQ = new ApproveQuestionDto();
 
     async Task SubmitQuestion()
     {
@@ -128,15 +130,15 @@ else
         NavMgr.NavigateTo("/question");
     }  
 
-    public async Task Approve()
+    async Task Approve()
     {
         await qService.ApproveQuestion(approveQ);
-        NavMgr.NavigateTo("/Question", true);
+        NavMgr.NavigateTo("/question", true);
     }
 
-    public async Task Delete()
+    async Task Delete()
     {
-        await qService.DeleteQuestion(approveQ);
-        NavMgr.NavigateTo("/Question", true);
+        await qService.DeleteQuestion(deleteQ);
+        NavMgr.NavigateTo("/question", true);
     }
 }

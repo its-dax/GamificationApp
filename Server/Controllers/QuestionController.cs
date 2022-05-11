@@ -85,13 +85,13 @@ namespace GamificationApp.Server.Controllers
 
             return Ok(result);
         }
-        
+
         [HttpPatch("{id:int}")]
-        public async Task<ActionResult<Question>> PatchQuestion(ApproveQuestionDto approve)
+        public async Task<ActionResult<Question>> PatchQuestion(int id)
         {
             try
             {
-                var question = await this.questionRepository.ApproveQuestion(approve.QuestionId);
+                var question = await this.questionRepository.ApproveQuestion(id);
                 if (question == null)
                 {
                     return NotFound();
@@ -107,11 +107,11 @@ namespace GamificationApp.Server.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<Question>> DeleteQuestion(ApproveQuestionDto delete)
+        public async Task<ActionResult<Question>> DeleteQuestion(int id)
         {
             try
             {
-                var deleteItem = await this.questionRepository.DeleteQuestion(delete.QuestionId);
+                var deleteItem = await this.questionRepository.DeleteQuestion(id);
 
                 if (deleteItem is null)
                 {
