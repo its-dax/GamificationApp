@@ -1,0 +1,71 @@
+﻿@page "/test"
+@inject ITestService tService
+@inherits PageBase
+@inject IQuestionService qService
+@inject NavigationManager NavMgr
+
+@if (MySubjects is null)
+{
+    <h4>Betöltés...</h4>
+}
+else
+{
+   <h4>Teszt kiírása</h4>
+<CascadingAuthenticationState>
+    <AuthorizeView Roles="Teacher">
+        <Authorized>
+            <EditForm Model="addTest" OnValidSubmit="AddTest" Context="AddTest">
+                <DataAnnotationsValidator />
+                <div class="col-form-label-lg"> 
+                        <label for="subj">Tantárgy</label>
+                        <InputSelect id="subj" @bind-Value="addTest.SubjectName" class="form-control">
+                            @foreach(var sub in Subjects)
+                            {
+                                <option value ="@sub.Name">@sub.Name</option>
+                            }
+                        </InputSelect>
+                </div>
+                <div class="col-form-label-lg"> 
+                    <label for="title">Kérdések száma</label>
+                    <InputNumber id="title" @bind-Value="addTest.NumberOfQuestions" class="form-control"/>
+                    <ValidationMessage For="@(() => addTest.NumberOfQuestions)"> </ValidationMessage>
+                </div>
+                <div class="col-form-label-lg"> 
+                    <label for="Time">Rendelkezésre álló idő percben</label>
+                    <InputNumber id="Time" @bind-Value="addTest.TestTimeInMinutes" class="form-control"/>
+                    <ValidationMessage For="@(() => addTest.TestTimeInMinutes)"> </ValidationMessage>
+                </div>
+                <div class="col-form-label-lg"> 
+                    <label for="Start">Teszt kezdete</label>
+                    <InputDate id="Start" @bind-Value="addTest.StartTime" class="form-control"/>
+                    <ValidationMessage For="@(() => addTest.StartTime)"> </ValidationMessage>
+                </div>
+                <div class="col-form-label-lg"> 
+                        <label for="subj">Tantárgy</label>
+                        <InputSelect id="subj" @bind-Value="addTest.SubjectName" class="form-control">
+                            @foreach(var sub in MySubjects)
+                            {
+                                <option value ="@sub.Name">@sub.Name</option>
+                            }
+                        </InputSelect>
+                </div>
+                <button type="submit" class="btn btn-primary">Küldés</button>
+            </EditForm>
+        </Authorized>
+        <NotAuthorized>
+            Nincs jogosultsága a tartalomhoz.
+        </NotAuthorized>
+    </AuthorizeView> 
+</CascadingAuthenticationState>
+}
+
+
+@code {
+    TestDto addTest = new TestDto();
+    
+    async Task AddTest()
+    {
+        await tService.AddTest(addTest);
+        NavMgr.NavigateTo("/");
+    }
+}

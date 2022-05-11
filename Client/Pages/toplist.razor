@@ -1,0 +1,92 @@
+﻿@page "/TopScores"
+@inherits ScoreBase
+
+<AuthorizeView Roles="Student">
+    <Authorized>
+    @if(Scores is null && ErrorMessage is null)
+    {
+        <h4>Pontok betöltése</h4>
+    }
+    else if (ErrorMessage is not null)
+    {           
+        <h3>Hiba</h3>
+        <Displayerror ErrorMessage="@ErrorMessage"></Displayerror>
+    }
+    else
+    {
+        for(int i = 0; i <= TopScores.Count()-1; i++)
+        {
+            <div class="col-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <b>Tantárgy: </b> @TopScores[i][0].SubjectName
+                        </h5>
+                        @*@foreach (var score in TopScores[i])
+                        {
+                            if(score.Points != 0)
+                            {
+                                <div>@score.UserName :  @score.Points</div>
+                            }
+                        } *@
+                        @for(int j = 0; j < 3; j++)
+                        {
+                            if(TopScores[i][j].Points != 0)
+                            {
+                                <div> <b>[@(j+1)]</b> @TopScores[i][j].UserName :  @TopScores[i][j].Points</div>
+                            } 
+                        }
+                    </div>
+                </div>
+            </div>
+            <br/>
+        }
+    }
+    </Authorized>
+</AuthorizeView>
+<AuthorizeView>
+    <NotAuthorized>
+        <h3>Nincs bejelenetkezve. </h3>
+    </NotAuthorized>
+</AuthorizeView>
+<AuthorizeView Roles="Teacher">
+    <Authorized>
+    @if(Scores is null && ErrorMessage is null)
+    {
+        <h4>Pontok betöltése</h4>
+    }
+    else if (ErrorMessage is not null)
+    {           
+        <h3>Hiba</h3>
+        <Displayerror ErrorMessage="@ErrorMessage"></Displayerror>
+    }
+    else
+    {
+        for(int i = 0; i <= GroupedSubjectScores.Count()-1; i++)
+        {
+            <div class="col-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <b>Tantárgy: </b> @GroupedSubjectScores[i][0].SubjectName
+                        </h5>
+                        @foreach (var score in GroupedSubjectScores[i])
+                        {
+                            if(score.Points != 0)
+                            {
+                                <div>@score.UserName :  @score.Points</div>
+                            }
+                        }  
+                    </div>
+                </div>
+            </div>
+            <br/>
+        }
+    }
+    </Authorized>
+</AuthorizeView>
+<AuthorizeView>
+    <NotAuthorized>
+        <h3>Nincs bejelenetkezve. </h3>
+    </NotAuthorized>
+</AuthorizeView>

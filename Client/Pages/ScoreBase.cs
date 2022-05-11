@@ -17,6 +17,7 @@ namespace GamificationApp.Client.Pages
         public IEnumerable<ScoreDto> Scores { get; set; }
         public IEnumerable<ScoreDto> MyScores { get; set; }
         public IEnumerable<ScoreDto> SubjectScores { get; set; }
+        public List<List<ScoreDto>> TopScores { get; set; }
         public List<List<ScoreDto>> GroupedSubjectScores { get; set; }
         public string? TempError { get; set; } = null;
         public int UsersId { get; set; }
@@ -35,7 +36,13 @@ namespace GamificationApp.Client.Pages
                 MyScores = Scores.Where(x=>x.UserId == UsersId).ToList();
 
                 SubjectScores = Scores.Where(x => x.SubjectsTeacherId == UsersId)
-                    .OrderBy(x=> x.SubjectId).ThenByDescending(x => x.Points);
+                    .OrderBy(x=> x.SubjectId)
+                    .ThenByDescending(x => x.Points); 
+
+                TopScores = Scores.OrderBy(x => x.SubjectId)
+                    .ThenByDescending(x => x.Points)
+                    .GroupBy(u => u.SubjectId)
+                    .Select(grp => grp.ToList()).ToList(); ;
 
                 GroupedSubjectScores = SubjectScores.GroupBy(u => u.SubjectId)
                     .Select(grp => grp.ToList()).ToList();

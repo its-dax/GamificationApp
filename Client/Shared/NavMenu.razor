@@ -21,10 +21,24 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="getscores">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Pontok
+            <NavLink class="nav-link" href="topscores">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Toplista
             </NavLink>
         </div>
+        </AuthorizeView>
+        <AuthorizeView Roles="Student">
+            <div class="nav-item px-3">
+            <NavLink class="nav-link" href="myscores">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Pontjaim
+            </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView Roles="Teacher">
+            <div class="nav-item px-3">
+            <NavLink class="nav-link" href="test">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Teszt kiírása
+            </NavLink>
+            </div>
         </AuthorizeView>
     </nav>
 </div>

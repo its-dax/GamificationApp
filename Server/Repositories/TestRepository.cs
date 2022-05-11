@@ -15,12 +15,11 @@ namespace GamificationApp.Server.Repositories
             this.dataContext = dataContext;
         }
 
-        public async Task<Test> AddTest(TestDto testDto)
+        public async Task<Test> AddTest(Test test)
         {
-            //    var test = await ()
-            //var result = await this.dataContext.Tests.AddAsync(Test);
-            //    await this.dataContext.SaveChangesAsync();
-            //    return result.Entity;
+            var result = await this.dataContext.Tests.AddAsync(test);
+            await this.dataContext.SaveChangesAsync();
+
             return null;
         }
 

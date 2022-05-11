@@ -1,5 +1,5 @@
 ﻿@page "/Question"
-@inherits QuestionsBase
+@inherits PageBase
 @inject IQuestionService qService
 @inject NavigationManager NavMgr
 
@@ -127,13 +127,13 @@ else
         NavMgr.NavigateTo("/");
     }  
 
-    public async void Approve()
+    public async Task Approve()
     {
         await qService.ApproveQuestion(approveQ);
         NavMgr.NavigateTo("/Question", true);
     }
 
-    public async void Delete()
+    public async Task Delete()
     {
         await qService.DeleteQuestion(approveQ);
         NavMgr.NavigateTo("/Question", true);

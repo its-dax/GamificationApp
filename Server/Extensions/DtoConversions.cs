@@ -63,7 +63,7 @@ namespace GamificationApp.Server.Extensions
                     {
                         Id = score.Id,
                         UserId = score.UserId,
-                        UserName = user.Name,
+                        UserName = user.Code,
                         SubjectId = score.SubjectId,
                         SubjectName = subject.Name,
                         Points = score.Points,
@@ -81,7 +81,7 @@ namespace GamificationApp.Server.Extensions
                 SubjectId=score.SubjectId,
                 UserId=score.UserId,
                 SubjectName=subject.Name,
-                UserName = user.Name
+                UserName = user.Code
             };
         }
 
@@ -113,6 +113,18 @@ namespace GamificationApp.Server.Extensions
                 GoodAnswer = dto.GoodAnswer,
                 IsApproved = false,
                 UserId = dto.UserId,
+                SubjectId = (from subject in subjects
+                             where subject.Name == dto.SubjectName
+                             select subject.Id).SingleOrDefault()
+            };
+        }
+        public static Test ConvertFromDto(this TestDto dto, IEnumerable<Subject> subjects)
+        {
+            return new Test
+            {
+                StartTime = dto.StartTime,
+                TestTimeInMinutes= dto.TestTimeInMinutes,
+                NumberOfQuestions = dto.NumberOfQuestions,
                 SubjectId = (from subject in subjects
                              where subject.Name == dto.SubjectName
                              select subject.Id).SingleOrDefault()
