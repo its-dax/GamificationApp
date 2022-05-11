@@ -12,7 +12,8 @@ namespace GamificationApp.Shared.DTOs
         public int Id { get; set; }
         public int UserId { get; set; }
         public int SubjectId { get; set; }
-        public string SubjectName { get; set; }
+        [Required(ErrorMessage = "Kérlek válassz")]
+        public string SubjectName { get; set; } = "DevOps";
         public int SubjectTeacher { get; set; }
 
         [Required(ErrorMessage ="A mező kitöltése kötelező!")]
@@ -29,9 +30,8 @@ namespace GamificationApp.Shared.DTOs
 
         [Required(ErrorMessage = "A mező kitöltése kötelező!")]
         public string D { get; set; }
-
-        [Required(ErrorMessage = "A mező kitöltése kötelező!"), StringLength(1, ErrorMessage = "A helyes válasz betűjele 1 karakter lehet!")]
-        public string GoodAnswer { get; set; }
+        [Required(ErrorMessage = "Kérlek válassz")]
+        public string GoodAnswer { get; set; } = "A";
         public bool IsApproved { get; set; }
     }
 }

@@ -18,7 +18,7 @@ else
         <Authorized>
             <h2>Kérdés beküldése</h2>
             <hr/>
-            <EditForm Model="addQuestion" OnValidSubmit="SubmitQuestion" Context="AddQuestion">
+                <EditForm Model="addQuestion" OnValidSubmit="SubmitQuestion" Context="AddQuestion">
                 <DataAnnotationsValidator />
                 <div class="col-form-label-lg"> 
                     <label for="title">Kérdés szövege</label>
@@ -46,13 +46,19 @@ else
                     <ValidationMessage For="@(() => addQuestion.D)"> </ValidationMessage>
                 </div>
                 <div class="col-form-label-lg"> 
-                    <label for="good">Helyes válasz</label>
-                    <InputText id="good" @bind-Value="addQuestion.GoodAnswer" class="form-control"/>
+                    <label for="good">Helyes válasz: </label>
+                    @*<InputText id="good" @bind-Value="addQuestion.GoodAnswer" class="form-control"/>*@
+                    <InputSelect id="good" @bind-Value="addQuestion.GoodAnswer" class="form-select-sm">
+                            <option value =@("A")>A</option>
+                            <option value =@("B")>B</option>
+                            <option value =@("C")>C</option>
+                            <option value =@("D")>D</option>
+                    </InputSelect>
                     <ValidationMessage For="@(() => addQuestion.GoodAnswer)"> </ValidationMessage>
                 </div>
                 <div class="col-form-label-lg"> 
-                    <label for="subj">Tantárgy</label>
-                    <InputSelect id="subj" @bind-Value="addQuestion.SubjectName" class="form-control">
+                    <label for="subj">Tantárgy: </label>
+                    <InputSelect id="subj" @bind-Value="addQuestion.SubjectName" class="form-select-sm">
                         @foreach(var sub in Subjects)
                         {
                             <option value ="@sub.Name">@sub.Name</option>
@@ -130,7 +136,7 @@ else
     {
         addQuestion.UserId = UsersId;
         await qService.AddQuestion(addQuestion);
-        NavMgr.NavigateTo("/question");
+        NavMgr.NavigateTo("/questionsent");
     }  
 
     async Task Approve()

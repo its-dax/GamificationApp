@@ -1,0 +1,10 @@
+﻿@page "/questionsent"
+
+<AuthorizeView Roles="Student">
+    <Authorized>
+        <p>A kérdés beküldve! </p>
+    </Authorized>
+    <NotAuthorized>
+        <p>Az oldal nem elérhető</p>
+    </NotAuthorized>
+</AuthorizeView>
