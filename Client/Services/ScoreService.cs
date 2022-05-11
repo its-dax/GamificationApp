@@ -40,28 +40,5 @@ namespace GamificationApp.Client.Services
                 throw;
             }
         }
-       
-        //public async Task<ScoreDto> UpdatePoints(ScoreQtyUpdateDto scoreQtyUpdateDto)
-        //{
-        //    try
-        //    {
-        //        var jsonRequest = JsonConvert.SerializeObject(scoreQtyUpdateDto);
-        //        var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
-
-        //        var response = await this.httpClient.PatchAsync($"api/Score/{scoreQtyUpdateDto.ScoreId}", content);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            return await response.Content.ReadFromJsonAsync<ScoreDto>();
-        //        }
-
-        //        return null;
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
     }
 }

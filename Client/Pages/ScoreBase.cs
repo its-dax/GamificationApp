@@ -53,31 +53,5 @@ namespace GamificationApp.Client.Pages
             }
         }
 
-        //protected async Task UpdateScore(int id, int qty)
-        //{
-            
-
-        //    try
-        //    {
-        //        if (qty > 0)
-        //        {
-        //            var updateScoreDto = new ScoreQtyUpdateDto
-        //            {
-        //                ScoreId = id,
-        //                Qty = qty
-        //            };
-        //            var returnedUpdateScoreDto = await this.ScoreService.UpdatePoints(updateScoreDto);
-        //        }
-        //        else
-        //        {
-                    
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
     }
 }
