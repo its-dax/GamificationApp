@@ -48,29 +48,29 @@ namespace GamificationApp.Server.Controllers
             }
         }
 
-        [HttpPatch("{id:int}")]
-        public async Task<ActionResult<ScoreQtyUpdateDto>> UpdateQty(int id, ScoreQtyUpdateDto scoreQtyUpdateDto)
-        {
-            try
-            {
-                var score = await this.scoreRepository.UpdateScore(id, scoreQtyUpdateDto);
-                if (score == null)
-                {
-                    return NotFound();
-                }
+        //[HttpPatch("{id:int}")]
+        //public async Task<ActionResult<ScoreQtyUpdateDto>> UpdateQty(int id, ScoreQtyUpdateDto scoreQtyUpdateDto)
+        //{
+        //    try
+        //    {
+        //        var score = await this.scoreRepository.UpdateScore(id, scoreQtyUpdateDto);
+        //        if (score == null)
+        //        {
+        //            return NotFound();
+        //        }
 
-                var subjects = await this.subjectRepository.GetSubject(score.SubjectId);
-                var users = await this.userRepository.GetUser(score.UserId);
+        //        var subjects = await this.subjectRepository.GetSubject(score.SubjectId);
+        //        var users = await this.userRepository.GetUser(score.UserId);
 
-                var scoresDto = score.ConvertToDto(subjects, users);
+        //        var scoresDto = score.ConvertToDto(subjects, users);
 
-                return Ok(scoresDto);
-            }
-            catch (Exception)
-            {
+        //        return Ok(scoresDto);
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
     }
 }

@@ -20,12 +20,12 @@ namespace GamificationApp.Server.Repositories
             return scores;
         }
 
-        public async Task<Score> UpdateScore(int id, ScoreQtyUpdateDto scoreQtyUpdateDto)
+        public async Task<Score> UpdateScore(int id, int qty)
         {
             var score = await _dataContext.Scores.FindAsync(id);
             if (score is not null)
             {
-                score.Points += scoreQtyUpdateDto.Qty;
+                score.Points += qty;
                 await _dataContext.SaveChangesAsync();
                 return score;
             }

@@ -14,11 +14,13 @@ namespace GamificationApp.Server.Controllers
     {
         private readonly IQuestionRepository questionRepository;
         private readonly ISubjectRepository subjectRepository;
+        private readonly IScoreRepository scoreRepository;
 
-        public QuestionController(IQuestionRepository questionRepository, ISubjectRepository subjectRepository)
+        public QuestionController(IQuestionRepository questionRepository, ISubjectRepository subjectRepository, IScoreRepository scoreRepository)
         {
             this.questionRepository = questionRepository;
             this.subjectRepository = subjectRepository;
+            this.scoreRepository = scoreRepository;
         }
 
         [HttpGet]
@@ -92,6 +94,9 @@ namespace GamificationApp.Server.Controllers
             try
             {
                 var question = await this.questionRepository.ApproveQuestion(id);
+                var scores = await this.scoreRepository.GetScores();
+                var score = scores.Where(s => s.UserId == question.UserId && s.SubjectId == question.SubjectId).FirstOrDefault();
+                await scoreRepository.UpdateScore(score.Id, 1);
                 if (question == null)
                 {
                     return NotFound();

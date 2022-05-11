@@ -7,6 +7,6 @@ namespace GamificationApp.Server.Repositories.Interfaces
     {
 
         Task<IEnumerable<Score>> GetScores();
-        Task<Score> UpdateScore(int id, ScoreQtyUpdateDto scoreQtyUpdateDto);
+        Task<Score> UpdateScore(int id, int qty);
     }
 }
